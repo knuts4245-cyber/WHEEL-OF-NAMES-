@@ -45,12 +45,27 @@ body{font-family:'Roboto',sans-serif;background:#f5f5f5;height:100vh;overflow:hi
 .edit-btn{position:absolute;top:10px;left:10px;width:34px;height:34px;border-radius:50%;background:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.2);z-index:10}
 .edit-btn svg{width:17px;height:17px;fill:#555}
 .ad-bar{position:absolute;top:54px;left:10px;font-size:11px;color:#888;display:flex;gap:12px;z-index:10}
+
+/* Wheel wrapper: pointer sits at TOP (12 o'clock) */
 .wheel-wrap{position:relative;display:flex;align-items:center;justify-content:center}
 #wheelCanvas{cursor:pointer;border-radius:50%;display:block;box-shadow:0 6px 36px rgba(0,0,0,.28),0 2px 8px rgba(0,0,0,.15)}
+
+/* Pointer anchored to top-center of the wheel wrap */
+.pointer-wrap{
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:10;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  pointer-events:none;
+}
+
 .spin-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;z-index:5;border-radius:50%;overflow:hidden}
 .spin-main{font-size:clamp(16px,3vw,30px);font-weight:700;color:#fff;text-shadow:1px 2px 8px rgba(0,0,0,.7);text-align:center;padding:0 8%}
 .spin-sub{font-size:clamp(10px,1.4vw,15px);color:rgba(255,255,255,.9);text-shadow:1px 1px 5px rgba(0,0,0,.6);margin-top:4px}
-.pointer-wrap{position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:10}
 .footer-bar{position:absolute;bottom:6px;left:8px;font-size:10px;color:#999;z-index:10}
 .float-btns{position:absolute;bottom:14px;left:14px;display:flex;flex-direction:column;gap:7px;z-index:20}
 .fbtn{background:#fff;border:1px solid #ccc;border-radius:20px;padding:6px 13px;font-size:12px;font-weight:600;cursor:pointer;box-shadow:0 1px 5px rgba(0,0,0,.12);color:#444;font-family:'Roboto',sans-serif;transition:all .12s;display:flex;align-items:center;gap:5px}
@@ -273,20 +288,30 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
       <div class="wheel-stage" id="wheelStage">
         <button class="edit-btn"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
         <div class="ad-bar"><span>Report bad ad 🚩</span><span>Close ads ✕</span></div>
+
         <div class="wheel-wrap" id="wheelWrap">
           <canvas id="wheelCanvas" onclick="spinWheel()"></canvas>
-          <!-- Spin overlay: only shows "Click to spin" when idle, result when done -->
+
+          <!-- Pointer at TOP (12 o'clock) -->
+          <div class="pointer-wrap" id="pointerWrap">
+            <svg id="pointerSvg" viewBox="0 0 40 52" xmlns="http://www.w3.org/2000/svg" style="display:block">
+              <defs>
+                <linearGradient id="pg" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#42a5f5"/>
+                  <stop offset="1" stop-color="#1565c0"/>
+                </linearGradient>
+              </defs>
+              <!-- Triangle pointing DOWN into the wheel -->
+              <polygon points="20,48 2,6 38,6" fill="url(#pg)" stroke="#0d47a1" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
           <div class="spin-overlay" id="spinOverlay" style="pointer-events:none">
             <div class="spin-main" id="spinMain" style="opacity:0.85">Click to spin</div>
             <div class="spin-sub" id="spinSub" style="opacity:0.7">or press ctrl+enter</div>
           </div>
-          <div class="pointer-wrap" id="pointerWrap">
-            <svg id="pointerSvg" viewBox="0 0 44 68" xmlns="http://www.w3.org/2000/svg" style="display:block">
-              <defs><linearGradient id="ag" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1565c0"/><stop offset="1" stop-color="#42a5f5"/></linearGradient></defs>
-              <polygon points="40,34 6,8 14,34 6,60" fill="url(#ag)" stroke="#0d47a1" stroke-width="1.5" stroke-linejoin="round"/>
-            </svg>
-          </div>
         </div>
+
         <div class="footer-bar">Do Not Sell or Share My Personal Information</div>
         <div class="float-btns">
           <button class="fbtn" id="cheatBtn" onclick="togglePanel('cheat')">⚡ Cheat Mode</button>
@@ -294,6 +319,7 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
         </div>
         <div class="float-panel" id="cheatPanel">
           <div class="fp-head"><span class="fp-title">⚡ Force Result</span><button class="fp-x" onclick="togglePanel('cheat')">✕</button></div>
+          <div style="font-size:11px;color:#888;margin-bottom:8px">Wheel physically lands on chosen entry</div>
           <div class="force-grid" id="forceGrid"></div>
           <div style="font-size:10px;color:#bbb;margin-top:8px">Tap to force, tap again to clear</div>
         </div>
@@ -379,15 +405,6 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
           <div class="cr-title">Tails Color</div>
           <div class="swatches-h" id="tailSwatches"></div>
         </div>
-        <div class="cr-acc-header" onclick="toggleCrAcc('coinCheat')">
-          <div class="cr-acc-left">⚡ Cheat Mode <span class="cr-pill" id="coinCheatPill">OFF</span></div>
-          <span id="coinCheatArrow" style="color:rgba(255,255,255,.4);font-size:.7rem">▼</span>
-        </div>
-        <div class="cr-acc-body" id="coinCheatBody">
-          <div class="pct-row"><span class="pct-label">Heads chance</span><b class="pct-val" id="coinPctVal">50%</b></div>
-          <input type="range" min="0" max="100" value="50" id="coinSlider" oninput="coinPct=+this.value;document.getElementById('coinPctVal').textContent=this.value+'%'"/>
-          <div class="shints"><span>Always Tails</span><span>Always Heads</span></div>
-        </div>
         <div class="cr-acc-header" onclick="toggleCrAcc('coinMusic')">
           <div class="cr-acc-left">🎵 Win Music <span class="cr-pill" id="coinMusicPill">OFF</span></div>
           <span id="coinMusicArrow" style="color:rgba(255,255,255,.4);font-size:.7rem">▼</span>
@@ -458,11 +475,11 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
 <div id="yt-player"></div>
 
 <script>
-// HAMBURGER
+// ─── HAMBURGER ───────────────────────────────────────────
 function toggleHamMenu(){document.getElementById('hamMenu').classList.toggle('open')}
 document.addEventListener('click',function(e){if(!document.getElementById('hamWrap').contains(e.target))document.getElementById('hamMenu').classList.remove('open')});
 
-// YOUTUBE
+// ─── YOUTUBE ─────────────────────────────────────────────
 var ytPlayer=null,ytReady=false,ytPlayerReady=false,stopMusicTimer=null;
 window.onYouTubeIframeAPIReady=function(){ytReady=true;ytPlayer=new YT.Player('yt-player',{height:'1',width:'1',videoId:'',playerVars:{autoplay:0,controls:0,enablejsapi:1},events:{onReady:function(){ytPlayerReady=true;ytPlayer.setVolume(80)}}})};
 function loadYT(){if(document.getElementById('yt-api'))return;var s=document.createElement('script');s.id='yt-api';s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s)}
@@ -472,34 +489,52 @@ function toggleMusicEnabled(tab){var s=musicSettings[tab];s.enabled=!s.enabled;v
 function saveMusic(tab){var url=document.getElementById(tab+'YtUrl').value.trim();var start=parseInt(document.getElementById(tab+'YtStart').value)||0;var dur=parseInt(document.getElementById(tab+'YtDur').value)||10;musicSettings[tab].url=url;musicSettings[tab].startSec=start;musicSettings[tab].duration=dur;var vid=extractVid(url);var el=document.getElementById(tab+'MusicStatus');if(!el)return;if(url&&!vid){el.style.color='#ff7070';el.textContent='⚠ Invalid URL'}else{el.style.color='#80d8a0';el.textContent=vid?'✓ Saved!':'✓ Cleared';if(vid&&!ytReady)loadYT()}setTimeout(function(){el.textContent=''},3000)}
 function playWinMusic(tab){var s=musicSettings[tab];if(!s.enabled||!s.url)return;var vid=extractVid(s.url);if(!vid)return;var dur=(s.duration||10)*1000,start=s.startSec||0;function doPlay(){try{if(stopMusicTimer)clearTimeout(stopMusicTimer);ytPlayer.mute();ytPlayer.loadVideoById({videoId:vid,startSeconds:start});ytPlayer.playVideo();setTimeout(function(){try{ytPlayer.unMute();ytPlayer.setVolume(80)}catch(e){}},800);stopMusicTimer=setTimeout(function(){try{ytPlayer.stopVideo()}catch(e){}},dur)}catch(e){}}if(ytPlayerReady){doPlay()}else{loadYT();var att=0;var ck=setInterval(function(){att++;if(ytPlayerReady){clearInterval(ck);doPlay()}if(att>40)clearInterval(ck)},200)}}
 
-// APP TABS
+// ─── APP TABS ─────────────────────────────────────────────
 function switchApp(name){['wheel','coin','dice'].forEach(function(t){document.getElementById('tv-'+t).classList.toggle('active',t===name)});if(name==='wheel'){sizeCanvas();drawWheel()}}
 
-// ACCORDION
+// ─── ACCORDION ───────────────────────────────────────────
 var crOpen={};
 function toggleCrAcc(id){crOpen[id]=!crOpen[id];var open=crOpen[id];var body=document.getElementById(id+'Body');var arrow=document.getElementById(id+'Arrow');var pill=document.getElementById(id+'Pill');if(body)body.className='cr-acc-body'+(open?' open':'');if(arrow)arrow.textContent=open?'▲':'▼';if(pill){pill.textContent=open?'OPEN':'OFF';pill.className='cr-pill'+(open?' on':'')}}
 
-// FLOATING PANELS
+// ─── FLOATING PANELS ─────────────────────────────────────
 var panelOpen={cheat:false,wmusic:false};
 function togglePanel(id){panelOpen[id]=!panelOpen[id];document.getElementById(id+'Panel').classList.toggle('open',panelOpen[id]);document.getElementById(id==='cheat'?'cheatBtn':'wmusicBtn').classList.toggle('active-btn',panelOpen[id]);if(id==='cheat')updateForceGrid()}
 
-// ═══════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 // WHEEL
-// ═══════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 var entries=[];
 var WC=['#e53935','#1e88e5','#fb8c00','#43a047','#8e24aa','#00897b','#f4511e','#3949ab','#fdd835','#00acc1'];
-var wheelAngle=0,spinning=false,forcedIdx=-1,spinResults=[];
+var wheelAngle=0, spinning=false, forcedIdx=-1, spinResults=[];
 var sz=500;
+
+/*
+  POINTER IS AT THE TOP (12 o'clock = -π/2 radians).
+  A segment "wins" when its midpoint angle lands at exactly -π/2
+  (pointing straight up), which is where the pointer tip is.
+
+  wheelAngle is the rotation of the whole wheel.
+  Segment i spans: [wheelAngle + i*arc, wheelAngle + (i+1)*arc]
+  Segment midpoint (in canvas coords): wheelAngle + i*arc + arc/2
+
+  For segment i to be under the top pointer, we need:
+    (wheelAngle + i*arc + arc/2) ≡ -π/2  (mod 2π)
+  i.e. the midpoint is at the 12 o'clock position.
+*/
 
 function sizeCanvas(){
   var stage=document.getElementById('wheelStage');if(!stage)return;
-  var w=stage.clientWidth-80,h=stage.clientHeight-80;
+  var w=stage.clientWidth-80, h=stage.clientHeight-120; // extra top room for pointer
   sz=Math.max(180,Math.min(w,h,580));
-  var c=document.getElementById('wheelCanvas');c.width=sz;c.height=sz;
-  var ps=Math.max(26,sz*.075);
-  document.getElementById('pointerSvg').style.width=ps+'px';
-  document.getElementById('pointerSvg').style.height=(ps*1.55)+'px';
-  document.getElementById('pointerWrap').style.right=(-ps*.52)+'px';
+  var c=document.getElementById('wheelCanvas');
+  c.width=sz;c.height=sz;
+
+  // Size the pointer relative to wheel
+  var ps=Math.max(22, sz*0.07);
+  var svg=document.getElementById('pointerSvg');
+  svg.style.width=ps+'px';
+  svg.style.height=(ps*1.3)+'px';
+
   drawWheel();
 }
 
@@ -516,74 +551,49 @@ function drawWheel(){
   }
   var arc=2*Math.PI/n;
 
-  // ── Draw segments ──
+  // Draw segments
   for(var i=0;i<n;i++){
-    var s=wheelAngle+i*arc,e=s+arc;
+    var s=wheelAngle+i*arc, e=s+arc;
     ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,s,e);ctx.closePath();
     ctx.fillStyle=entries[i].color;ctx.fill();
     ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=2;ctx.stroke();
   }
 
-  // ── Draw labels RADIALLY (along the spoke, from hub toward rim) ──
-  // This matches the real wheelofnames.com layout: large text running
-  // outward from the center, filling the wedge.
-  var hubR=sz*0.065; // hub radius — text starts just outside this
-
+  // Draw labels radially
+  var hubR=sz*0.065;
   for(var i=0;i<n;i++){
     var mid=wheelAngle+i*arc+arc/2;
     ctx.save();
     ctx.translate(cx,cy);
-    ctx.rotate(mid); // +x now points along this segment's midline toward the rim
-
+    ctx.rotate(mid);
     var label=entries[i].label;
-
-    // Compute font size:
-    // 1. Height constraint: arc height at mid-radius must fit the glyphs
     var midR=(hubR+r)/2;
-    var arcHeight=midR*arc; // arc length at mid-radius ≈ available height
+    var arcHeight=midR*arc;
     var fsByHeight=Math.floor(arcHeight*0.68);
-
-    // 2. Width constraint: text must fit within the radial length (hub→rim)
-    var radLen=r-hubR-14; // pixels available along the spoke
-    // Approximate: each character is ~0.6× the font size wide
+    var radLen=r-hubR-14;
     var fsByWidth=Math.floor(radLen/(label.length*0.6));
-
-    var fs=Math.max(10, Math.min(fsByHeight, fsByWidth, Math.floor(sz*0.115)));
-
+    var fs=Math.max(10,Math.min(fsByHeight,fsByWidth,Math.floor(sz*0.115)));
     ctx.font='bold '+fs+'px Roboto,sans-serif';
     ctx.fillStyle='#fff';
     ctx.textAlign='left';
     ctx.textBaseline='middle';
-    ctx.shadowColor='rgba(0,0,0,.75)';
-    ctx.shadowBlur=4;
-    ctx.shadowOffsetX=1;
-    ctx.shadowOffsetY=1;
-
-    // Clip to the wedge so text never bleeds into adjacent segments
+    ctx.shadowColor='rgba(0,0,0,.75)';ctx.shadowBlur=4;
+    ctx.shadowOffsetX=1;ctx.shadowOffsetY=1;
     ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(0,0);
-    ctx.arc(0,0,r-2,-arc/2,arc/2);
-    ctx.closePath();
-    ctx.clip();
-
-    // Draw text starting just outside the hub, along the +x axis (= the spoke)
-    ctx.fillText(label, hubR+6, 0);
-
-    ctx.restore();
-    ctx.restore();
+    ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,r-2,-arc/2,arc/2);ctx.closePath();ctx.clip();
+    ctx.fillText(label,hubR+6,0);
+    ctx.restore();ctx.restore();
   }
 
-  // ── Outer ring border ──
+  // Outer ring
   ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
   ctx.strokeStyle='rgba(0,0,0,.12)';ctx.lineWidth=5;ctx.stroke();
 
-  // ── Hub (center circle) ──
+  // Hub
   ctx.beginPath();ctx.arc(cx,cy,hubR,0,Math.PI*2);
   ctx.fillStyle='#fff';
   ctx.shadowColor='rgba(0,0,0,.2)';ctx.shadowBlur=10;
-  ctx.fill();
-  ctx.shadowBlur=0;
+  ctx.fill();ctx.shadowBlur=0;
   ctx.strokeStyle='rgba(0,0,0,.1)';ctx.lineWidth=2;ctx.stroke();
   ctx.beginPath();ctx.arc(cx,cy,hubR*.35,0,Math.PI*2);
   ctx.fillStyle='#ddd';ctx.fill();
@@ -592,24 +602,49 @@ function drawWheel(){
 function spinWheel(){
   if(spinning||!entries.length)return;
   spinning=true;
-  // Hide overlay text while spinning
   document.getElementById('spinMain').textContent='';
   document.getElementById('spinSub').textContent='';
-  var n=entries.length,arc=2*Math.PI/n;
-  var winIdx=forcedIdx>=0&&forcedIdx<n?forcedIdx:Math.floor(Math.random()*n);
-  var winMid=winIdx*arc+arc/2;
-  var current=(wheelAngle%(Math.PI*2)+winMid)%(Math.PI*2);
-  var needed=(Math.PI*2-current)%(Math.PI*2);
-  var totalRot=(5+Math.random()*4)*Math.PI*2+needed;
-  var t0=null,start=wheelAngle,dur=3500+Math.random()*1000;
+
+  var n=entries.length;
+  var arc=2*Math.PI/n;
+
+  // Determine the winning index
+  // No cheat: pure random (strictly uniform)
+  var winIdx = (forcedIdx>=0 && forcedIdx<n) ? forcedIdx : Math.floor(Math.random()*n);
+
+  /*
+    We need segment winIdx's midpoint to land at the TOP pointer (-π/2).
+    Segment winIdx midpoint in world coords = (wheelAngle_final + winIdx*arc + arc/2)
+    We want that ≡ -π/2 (mod 2π)
+
+    So: wheelAngle_final = -π/2 - winIdx*arc - arc/2 + k*2π  for some integer k
+    We also want the wheel to spin several full rotations forward.
+  */
+  var targetAngle = -Math.PI/2 - winIdx*arc - arc/2;
+
+  // Normalize current wheelAngle to [0, 2π)
+  var current = ((wheelAngle % (Math.PI*2)) + Math.PI*2) % (Math.PI*2);
+
+  // How far we need to go from current to reach targetAngle (mod 2π)
+  var normTarget = ((targetAngle % (Math.PI*2)) + Math.PI*2) % (Math.PI*2);
+  var diff = normTarget - current;
+  if(diff<=0) diff += Math.PI*2; // always go forward
+
+  // Add 5–9 full rotations for drama
+  var extraSpins = (5 + Math.floor(Math.random()*5)) * Math.PI*2;
+  var totalRot = extraSpins + diff;
+
+  var t0=null, startAngle=wheelAngle, dur=3500+Math.random()*1000;
   function ease(t){return 1-Math.pow(1-t,4)}
   function frame(ts){
-    if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1);
-    wheelAngle=start+totalRot*ease(p);drawWheel();
+    if(!t0)t0=ts;
+    var p=Math.min((ts-t0)/dur,1);
+    wheelAngle=startAngle+totalRot*ease(p);
+    drawWheel();
     if(p<1){requestAnimationFrame(frame);return}
-    wheelAngle=start+totalRot;
+    // Snap precisely
+    wheelAngle=startAngle+totalRot;
     var winner=entries[winIdx];
-    // Show winner in overlay
     document.getElementById('spinMain').textContent='🎉 '+winner.label;
     document.getElementById('spinSub').textContent='Click to spin again';
     spinResults.unshift(winner.label);
@@ -626,7 +661,11 @@ function sortEntries(){entries.sort(function(a,b){return a.label.localeCompare(b
 function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function renderEntries(){
   var el=document.getElementById('entriesList');el.innerHTML='';
-  entries.forEach(function(e,i){var r=document.createElement('div');r.className='erow';r.innerHTML='<div class="edot" style="background:'+e.color+'"></div><span class="ename">'+escHtml(e.label)+'</span><button class="edel" onclick="removeEntry('+i+')">✕</button>';el.appendChild(r)});
+  entries.forEach(function(e,i){
+    var r=document.createElement('div');r.className='erow';
+    r.innerHTML='<div class="edot" style="background:'+e.color+'"></div><span class="ename">'+escHtml(e.label)+'</span><button class="edel" onclick="removeEntry('+i+')">✕</button>';
+    el.appendChild(r);
+  });
   document.getElementById('eBadge').textContent=entries.length;
 }
 function renderResults(){
@@ -636,21 +675,24 @@ function renderResults(){
 }
 function updateForceGrid(){
   var g=document.getElementById('forceGrid');if(!g)return;g.innerHTML='';
-  entries.forEach(function(e,i){var b=document.createElement('button');b.className='force-btn'+(i===forcedIdx?' on':'');b.textContent=e.label;b.onclick=(function(idx){return function(){forcedIdx=forcedIdx===idx?-1:idx;updateForceGrid()}})(i);g.appendChild(b)});
+  entries.forEach(function(e,i){
+    var b=document.createElement('button');
+    b.className='force-btn'+(i===forcedIdx?' on':'');
+    b.textContent=e.label;
+    b.onclick=(function(idx){return function(){forcedIdx=(forcedIdx===idx)?-1:idx;updateForceGrid()}})(i);
+    g.appendChild(b);
+  });
 }
 function switchPTab(t){
-  ['entries','results'].forEach(function(x){document.getElementById('ptab-'+x).classList.toggle('active',x===t);document.getElementById('pv-'+x).style.display=x===t?(x==='entries'?'flex':'block'):'none'});
+  ['entries','results'].forEach(function(x){
+    document.getElementById('ptab-'+x).classList.toggle('active',x===t);
+    document.getElementById('pv-'+x).style.display=x===t?(x==='entries'?'flex':'block'):'none';
+  });
 }
 
-// Reset overlay when idle
-document.getElementById('wheelCanvas').addEventListener('click',function(){
-  if(!spinning&&spinResults.length){
-    // keep result showing; next click will spin
-  }
-});
-
-// COIN
-var coinPct=50,coinStats={h:0,t:0},coinFlipping=false;
+// ─── COIN ─────────────────────────────────────────────────
+// Strict 50/50 — Math.random() is unbiased, exactly 0.5 threshold
+var coinStats={h:0,t:0}, coinFlipping=false;
 var COLORS=[
   {bg:'radial-gradient(circle at 38% 32%,#dcdcdc,#a0a0a0)',text:'#111'},
   {bg:'radial-gradient(circle at 38% 32%,#ffd700,#b8860b)',text:'#2a2000'},
@@ -675,11 +717,16 @@ function buildSwatches(){
     });
   });
 }
-function applyColors(){var hf=document.getElementById('headsface'),tf=document.getElementById('tailsface');hf.style.background=COLORS[hColor].bg;hf.style.color=COLORS[hColor].text;tf.style.background=COLORS[tColor].bg;tf.style.color=COLORS[tColor].text}
+function applyColors(){
+  var hf=document.getElementById('headsface'),tf=document.getElementById('tailsface');
+  hf.style.background=COLORS[hColor].bg;hf.style.color=COLORS[hColor].text;
+  tf.style.background=COLORS[tColor].bg;tf.style.color=COLORS[tColor].text;
+}
 function doFlip(){
   if(coinFlipping)return;coinFlipping=true;
   var coin=document.getElementById('coin');coin.className='coin';void coin.offsetWidth;
-  var result=Math.random()*100<coinPct?'heads':'tails';
+  // Strict 50/50: heads if random < 0.5, tails otherwise
+  var result=Math.random()<0.5?'heads':'tails';
   coin.classList.add(result==='heads'?'anim-h':'anim-t');
   document.getElementById('coinResult').textContent='...';
   setTimeout(function(){
@@ -694,7 +741,7 @@ function doFlip(){
 }
 function resetCoin(){coinStats={h:0,t:0};['hCount','tCount','coinTotal'].forEach(function(id){document.getElementById(id).textContent=0});document.getElementById('coinResult').textContent='—';document.getElementById('coin').className='coin'}
 
-// DICE
+// ─── DICE ─────────────────────────────────────────────────
 var diceFaces=[4,6,8,10,12,20],diceTypeSides=6,diceCount=2,diceRolling=false,diceRollTotal=0,diceForcedValue=0;
 function diceEmoji(v){return v>=1&&v<=6&&diceTypeSides===6?['⚀','⚁','⚂','⚃','⚄','⚅'][v-1]:v}
 function buildDiceUI(){
@@ -727,11 +774,11 @@ function rollDice(){
 }
 function resetDice(){diceRollTotal=0;document.getElementById('diceTotal').textContent=0;document.getElementById('diceSum').textContent='—';document.getElementById('diceResult').textContent='—';for(var i=0;i<diceCount;i++){var d=document.getElementById('die-'+i);if(d)d.textContent=diceTypeSides===6?'⚄':'?'}}
 
-// CONFETTI
+// ─── CONFETTI ─────────────────────────────────────────────
 var cc=['#e53935','#ffd600','#1e88e5','#43a047','#8e24aa','#fb8c00','#fff','#ff80ab','#00e5ff'];
 function confetti(n){for(var i=0;i<n;i++){var el=document.createElement('div');el.className='cp';el.style.left=Math.random()*100+'vw';el.style.background=cc[Math.floor(Math.random()*cc.length)];el.style.width=(6+Math.random()*9)+'px';el.style.height=(6+Math.random()*9)+'px';el.style.animationDuration=(1.1+Math.random()*2)+'s';el.style.animationDelay=(Math.random()*.5)+'s';el.style.borderRadius=Math.random()>.5?'50%':'2px';document.body.appendChild(el);setTimeout(function(){el.remove()},3600)}}
 
-// INIT
+// ─── INIT ────────────────────────────────────────────────
 buildSwatches();applyColors();
 buildDiceTypes();buildDiceUI();
 renderEntries();renderResults();
