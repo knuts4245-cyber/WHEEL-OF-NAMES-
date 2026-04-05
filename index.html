@@ -220,7 +220,6 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
 
   <div class="nav-sep"></div>
 
-  <!-- Hamburger for switching apps -->
   <div class="hamburger-wrap" id="hamWrap">
     <button class="hamburger-btn" onclick="toggleHamMenu()">
       <div class="hlines"><span></span><span></span><span></span></div>
@@ -276,9 +275,10 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
         <div class="ad-bar"><span>Report bad ad 🚩</span><span>Close ads ✕</span></div>
         <div class="wheel-wrap" id="wheelWrap">
           <canvas id="wheelCanvas" onclick="spinWheel()"></canvas>
-          <div class="spin-overlay">
-            <div class="spin-main" id="spinMain">Click to spin</div>
-            <div class="spin-sub" id="spinSub">or press ctrl+enter</div>
+          <!-- Spin overlay: only shows "Click to spin" when idle, result when done -->
+          <div class="spin-overlay" id="spinOverlay" style="pointer-events:none">
+            <div class="spin-main" id="spinMain" style="opacity:0.85">Click to spin</div>
+            <div class="spin-sub" id="spinSub" style="opacity:0.7">or press ctrl+enter</div>
           </div>
           <div class="pointer-wrap" id="pointerWrap">
             <svg id="pointerSvg" viewBox="0 0 44 68" xmlns="http://www.w3.org/2000/svg" style="display:block">
@@ -515,54 +515,90 @@ function drawWheel(){
     ctx.fillText('Add entries →',cx,cy);return;
   }
   var arc=2*Math.PI/n;
-  // Draw segments
+
+  // ── Draw segments ──
   for(var i=0;i<n;i++){
     var s=wheelAngle+i*arc,e=s+arc;
     ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,s,e);ctx.closePath();
     ctx.fillStyle=entries[i].color;ctx.fill();
     ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=2;ctx.stroke();
   }
-  // Draw labels
+
+  // ── Draw labels RADIALLY (along the spoke, from hub toward rim) ──
+  // This matches the real wheelofnames.com layout: large text running
+  // outward from the center, filling the wedge.
+  var hubR=sz*0.065; // hub radius — text starts just outside this
+
   for(var i=0;i<n;i++){
     var mid=wheelAngle+i*arc+arc/2;
     ctx.save();
     ctx.translate(cx,cy);
-    ctx.rotate(mid);
+    ctx.rotate(mid); // +x now points along this segment's midline toward the rim
+
     var label=entries[i].label;
-    if(label.length>22)label=label.slice(0,21)+'…';
-    var fs=Math.max(9,Math.min(20,sz/14)-Math.max(0,(n-6)*1.1));
+
+    // Compute font size:
+    // 1. Height constraint: arc height at mid-radius must fit the glyphs
+    var midR=(hubR+r)/2;
+    var arcHeight=midR*arc; // arc length at mid-radius ≈ available height
+    var fsByHeight=Math.floor(arcHeight*0.68);
+
+    // 2. Width constraint: text must fit within the radial length (hub→rim)
+    var radLen=r-hubR-14; // pixels available along the spoke
+    // Approximate: each character is ~0.6× the font size wide
+    var fsByWidth=Math.floor(radLen/(label.length*0.6));
+
+    var fs=Math.max(10, Math.min(fsByHeight, fsByWidth, Math.floor(sz*0.115)));
+
     ctx.font='bold '+fs+'px Roboto,sans-serif';
     ctx.fillStyle='#fff';
     ctx.textAlign='left';
     ctx.textBaseline='middle';
-    ctx.shadowColor='rgba(0,0,0,.6)';ctx.shadowBlur=3;ctx.shadowOffsetX=1;ctx.shadowOffsetY=1;
-    // Clip to segment
+    ctx.shadowColor='rgba(0,0,0,.75)';
+    ctx.shadowBlur=4;
+    ctx.shadowOffsetX=1;
+    ctx.shadowOffsetY=1;
+
+    // Clip to the wedge so text never bleeds into adjacent segments
     ctx.save();
-    ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,r-2,-arc/2,arc/2);ctx.closePath();ctx.clip();
-    ctx.fillText(label,r*0.13,0);
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.arc(0,0,r-2,-arc/2,arc/2);
+    ctx.closePath();
+    ctx.clip();
+
+    // Draw text starting just outside the hub, along the +x axis (= the spoke)
+    ctx.fillText(label, hubR+6, 0);
+
     ctx.restore();
     ctx.restore();
   }
-  // Outer border
+
+  // ── Outer ring border ──
   ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
   ctx.strokeStyle='rgba(0,0,0,.12)';ctx.lineWidth=5;ctx.stroke();
-  // Hub
-  var hr=sz*.065;
-  ctx.beginPath();ctx.arc(cx,cy,hr,0,Math.PI*2);
-  ctx.fillStyle='#fff';ctx.shadowColor='rgba(0,0,0,.2)';ctx.shadowBlur=10;ctx.fill();
-  ctx.shadowBlur=0;ctx.strokeStyle='rgba(0,0,0,.1)';ctx.lineWidth=2;ctx.stroke();
-  ctx.beginPath();ctx.arc(cx,cy,hr*.35,0,Math.PI*2);ctx.fillStyle='#ddd';ctx.fill();
+
+  // ── Hub (center circle) ──
+  ctx.beginPath();ctx.arc(cx,cy,hubR,0,Math.PI*2);
+  ctx.fillStyle='#fff';
+  ctx.shadowColor='rgba(0,0,0,.2)';ctx.shadowBlur=10;
+  ctx.fill();
+  ctx.shadowBlur=0;
+  ctx.strokeStyle='rgba(0,0,0,.1)';ctx.lineWidth=2;ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,hubR*.35,0,Math.PI*2);
+  ctx.fillStyle='#ddd';ctx.fill();
 }
 
 function spinWheel(){
   if(spinning||!entries.length)return;
   spinning=true;
-  document.getElementById('spinMain').textContent='…';
+  // Hide overlay text while spinning
+  document.getElementById('spinMain').textContent='';
   document.getElementById('spinSub').textContent='';
   var n=entries.length,arc=2*Math.PI/n;
   var winIdx=forcedIdx>=0&&forcedIdx<n?forcedIdx:Math.floor(Math.random()*n);
   var winMid=winIdx*arc+arc/2;
-  var current=(wheelAngle+winMid)%(Math.PI*2);
+  var current=(wheelAngle%(Math.PI*2)+winMid)%(Math.PI*2);
   var needed=(Math.PI*2-current)%(Math.PI*2);
   var totalRot=(5+Math.random()*4)*Math.PI*2+needed;
   var t0=null,start=wheelAngle,dur=3500+Math.random()*1000;
@@ -573,7 +609,8 @@ function spinWheel(){
     if(p<1){requestAnimationFrame(frame);return}
     wheelAngle=start+totalRot;
     var winner=entries[winIdx];
-    document.getElementById('spinMain').textContent=winner.label;
+    // Show winner in overlay
+    document.getElementById('spinMain').textContent='🎉 '+winner.label;
     document.getElementById('spinSub').textContent='Click to spin again';
     spinResults.unshift(winner.label);
     document.getElementById('rBadge').textContent=spinResults.length;
@@ -604,6 +641,13 @@ function updateForceGrid(){
 function switchPTab(t){
   ['entries','results'].forEach(function(x){document.getElementById('ptab-'+x).classList.toggle('active',x===t);document.getElementById('pv-'+x).style.display=x===t?(x==='entries'?'flex':'block'):'none'});
 }
+
+// Reset overlay when idle
+document.getElementById('wheelCanvas').addEventListener('click',function(){
+  if(!spinning&&spinResults.length){
+    // keep result showing; next click will spin
+  }
+});
 
 // COIN
 var coinPct=50,coinStats={h:0,t:0},coinFlipping=false;
