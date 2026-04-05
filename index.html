@@ -9,61 +9,53 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Roboto',sans-serif;background:#f5f5f5;height:100vh;overflow:hidden;display:flex;flex-direction:column;color:#333;font-size:14px}
 
-/* ── TOP BAR ── */
-.topbar{height:50px;background:#fff;border-bottom:1px solid #e0e0e0;display:flex;align-items:center;padding:0 10px;gap:2px;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.1);z-index:100}
-.brand{display:flex;align-items:center;gap:7px;margin-right:8px;text-decoration:none;color:#333;flex-shrink:0}
-.brand-name{font-size:14px;font-weight:500;white-space:nowrap;color:#444}
-.nav-sep{width:1px;height:22px;background:#e0e0e0;margin:0 3px;flex-shrink:0}
-.nav-item{display:flex;align-items:center;gap:4px;padding:5px 8px;border:none;background:transparent;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:500;color:#555;border-radius:4px;transition:background .12s;white-space:nowrap}
+/* TOP BAR */
+.topbar{height:48px;background:#fff;border-bottom:1px solid #e0e0e0;display:flex;align-items:center;padding:0 8px;gap:2px;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.08);z-index:200}
+.brand{display:flex;align-items:center;gap:6px;margin-right:6px;text-decoration:none;color:#333;flex-shrink:0}
+.brand-name{font-size:15px;font-weight:500;color:#444;white-space:nowrap}
+.nav-sep{width:1px;height:20px;background:#e0e0e0;margin:0 2px;flex-shrink:0}
+.nav-item{display:flex;align-items:center;gap:4px;padding:5px 7px;border:none;background:transparent;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:500;color:#555;border-radius:4px;transition:background .12s;white-space:nowrap}
 .nav-item:hover{background:#f0f0f0}
 .nav-item svg{width:14px;height:14px;flex-shrink:0}
-
-/* App tabs in nav */
-.app-tabs{display:flex;margin-left:16px;gap:2px}
-.atab{padding:6px 14px;border:none;background:transparent;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:600;color:#888;border-radius:20px;transition:all .15s;display:flex;align-items:center;gap:5px}
-.atab.active{background:linear-gradient(135deg,#e53935,#1e88e5);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.atab:hover:not(.active){background:#f0f0f0;color:#333}
-
 .nav-spacer{flex:1}
 .lang-btn{display:flex;align-items:center;gap:3px;padding:5px 8px;border:none;background:transparent;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;color:#555;border-radius:4px}
 .lang-btn:hover{background:#f0f0f0}
 
-/* ── MAIN ── */
-.main{flex:1;display:flex;overflow:hidden;position:relative}
+/* HAMBURGER MENU */
+.hamburger-wrap{position:relative}
+.hamburger-btn{display:flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid #ddd;background:#fff;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:500;color:#555;border-radius:4px;transition:all .12s}
+.hamburger-btn:hover{background:#f0f0f0}
+.hamburger-btn .hlines{display:flex;flex-direction:column;gap:3px;width:16px}
+.hamburger-btn .hlines span{display:block;height:2px;background:#555;border-radius:1px}
+.ham-dropdown{position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.15);z-index:999;min-width:160px;overflow:hidden;display:none}
+.ham-dropdown.open{display:block}
+.ham-item{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;font-size:14px;font-weight:500;color:#333;transition:background .1s}
+.ham-item:hover{background:#f5f5f5}
+.ham-item .ham-icon{font-size:18px;width:24px;text-align:center}
+.ham-sep{height:1px;background:#f0f0f0;margin:2px 0}
+
+/* MAIN */
+.main{flex:1;display:flex;overflow:hidden}
 .tab-view{display:none;flex:1;overflow:hidden}
 .tab-view.active{display:flex}
 
-/* ═══════════════════════════════════════════
-   WHEEL TAB
-═══════════════════════════════════════════ */
+/* WHEEL TAB */
 .wheel-tab{flex:1;display:flex;overflow:hidden}
-
-.wheel-stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;
-  background:radial-gradient(ellipse at 35% 45%,#e4c4d8 0%,#cdb8d0 25%,#b8c6e2 60%,#a6bcd6 100%)}
+.wheel-stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(ellipse at 35% 45%,#e4c4d8 0%,#cdb8d0 25%,#b8c6e2 60%,#a6bcd6 100%)}
 .edit-btn{position:absolute;top:10px;left:10px;width:34px;height:34px;border-radius:50%;background:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.2);z-index:10}
 .edit-btn svg{width:17px;height:17px;fill:#555}
 .ad-bar{position:absolute;top:54px;left:10px;font-size:11px;color:#888;display:flex;gap:12px;z-index:10}
-.ad-bar span{cursor:pointer}
-.ad-bar span:hover{text-decoration:underline}
-
 .wheel-wrap{position:relative;display:flex;align-items:center;justify-content:center}
 #wheelCanvas{cursor:pointer;border-radius:50%;display:block;box-shadow:0 6px 36px rgba(0,0,0,.28),0 2px 8px rgba(0,0,0,.15)}
-
 .spin-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;z-index:5;border-radius:50%;overflow:hidden}
 .spin-main{font-size:clamp(16px,3vw,30px);font-weight:700;color:#fff;text-shadow:1px 2px 8px rgba(0,0,0,.7);text-align:center;padding:0 8%}
-.spin-sub{font-size:clamp(11px,1.6vw,17px);color:rgba(255,255,255,.9);text-shadow:1px 1px 5px rgba(0,0,0,.6);margin-top:4px}
-
+.spin-sub{font-size:clamp(10px,1.4vw,15px);color:rgba(255,255,255,.9);text-shadow:1px 1px 5px rgba(0,0,0,.6);margin-top:4px}
 .pointer-wrap{position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:10}
-
 .footer-bar{position:absolute;bottom:6px;left:8px;font-size:10px;color:#999;z-index:10}
-
-/* Cheat & Music floating buttons */
 .float-btns{position:absolute;bottom:14px;left:14px;display:flex;flex-direction:column;gap:7px;z-index:20}
 .fbtn{background:#fff;border:1px solid #ccc;border-radius:20px;padding:6px 13px;font-size:12px;font-weight:600;cursor:pointer;box-shadow:0 1px 5px rgba(0,0,0,.12);color:#444;font-family:'Roboto',sans-serif;transition:all .12s;display:flex;align-items:center;gap:5px}
-.fbtn:hover{background:#f5f5f5;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.fbtn:hover{background:#f5f5f5}
 .fbtn.active-btn{background:linear-gradient(135deg,#43a047,#1b5e20);color:#fff;border-color:transparent}
-
-/* Floating panels */
 .float-panel{position:absolute;bottom:100px;left:14px;background:#fff;border:1px solid #ddd;border-radius:10px;padding:14px 16px;width:260px;box-shadow:0 4px 20px rgba(0,0,0,.18);z-index:30;display:none}
 .float-panel.open{display:block}
 .fp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
@@ -71,18 +63,13 @@ body{font-family:'Roboto',sans-serif;background:#f5f5f5;height:100vh;overflow:hi
 .fp-x{background:none;border:none;cursor:pointer;color:#bbb;font-size:15px;line-height:1;padding:0}
 .fp-x:hover{color:#555}
 .force-grid{display:flex;flex-wrap:wrap;gap:5px}
-.force-btn{padding:3px 9px;border-radius:20px;border:1px solid #ccc;background:#fff;color:#444;font-size:12px;cursor:pointer;font-family:'Roboto',sans-serif;transition:all .1s}
+.force-btn{padding:4px 10px;border-radius:20px;border:1px solid #ccc;background:#fff;color:#444;font-size:12px;cursor:pointer;font-family:'Roboto',sans-serif;transition:all .1s}
 .force-btn.on{background:#e53935;border-color:#e53935;color:#fff}
-
-/* Music panel */
 .music-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#888;margin:10px 0 4px}
 .music-input{width:100%;padding:7px 10px;border:1px solid #ccc;border-radius:6px;font-family:'Roboto',sans-serif;font-size:13px;outline:none;transition:border-color .12s;margin-bottom:6px}
 .music-input:focus{border-color:#1e88e5}
 .music-input::placeholder{color:#ccc}
-.music-row{display:flex;gap:6px;align-items:flex-end}
-.music-field{flex:1}
-.music-save{background:#1e88e5;color:#fff;border:none;border-radius:6px;padding:8px 12px;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:600;transition:background .12s;white-space:nowrap}
-.music-save:hover{background:#1565c0}
+.music-save{background:#1e88e5;color:#fff;border:none;border-radius:6px;padding:8px 12px;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:600}
 .music-toggle-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .music-toggle-label{font-size:13px;color:#555;font-weight:500}
 .tog{width:40px;height:22px;background:#ccc;border-radius:11px;position:relative;cursor:pointer;transition:background .2s;border:none;flex-shrink:0}
@@ -90,21 +77,19 @@ body{font-family:'Roboto',sans-serif;background:#f5f5f5;height:100vh;overflow:hi
 .tog::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 .tog.on::after{left:21px}
 .music-status{font-size:11px;color:#43a047;margin-top:5px;min-height:14px}
-input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;margin:4px 0}
-.slider-hints{display:flex;justify-content:space-between;font-size:10px;color:#bbb}
 
 /* RIGHT PANEL */
-.right-panel{width:330px;flex-shrink:0;background:#fff;border-left:1px solid #e0e0e0;display:flex;flex-direction:column;overflow:hidden}
+.right-panel{width:320px;flex-shrink:0;background:#fff;border-left:1px solid #e0e0e0;display:flex;flex-direction:column;overflow:hidden}
 .panel-tabs-row{display:flex;border-bottom:1px solid #e0e0e0;flex-shrink:0;position:relative}
-.tab-arrow{position:absolute;left:0;top:0;bottom:0;width:26px;background:#ff6b00;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2}
+.tab-arrow{position:absolute;left:0;top:0;bottom:0;width:28px;background:#ff6d00;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;transition:background .12s}
+.tab-arrow:hover{background:#e65100}
 .tab-arrow svg{width:13px;height:13px;fill:#fff}
 .ptab{flex:1;padding:10px 5px;display:flex;align-items:center;justify-content:center;gap:5px;font-size:13px;font-weight:500;color:#999;cursor:pointer;border-bottom:2px solid transparent;user-select:none;transition:all .12s}
-.ptab:first-of-type{margin-left:26px}
+.ptab:first-of-type{margin-left:28px}
 .ptab.active{color:#222;border-bottom-color:#222}
 .badge{background:#999;color:#fff;border-radius:10px;padding:0 6px;font-size:11px;font-weight:700;min-width:18px;text-align:center}
 .ptab.active .badge{background:#222}
-
-.panel-actions{display:flex;align-items:center;gap:5px;padding:9px 10px;border-bottom:1px solid #e0e0e0;flex-shrink:0;flex-wrap:wrap}
+.panel-actions{display:flex;align-items:center;gap:5px;padding:8px 10px;border-bottom:1px solid #e0e0e0;flex-shrink:0;flex-wrap:wrap}
 .abtn{display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:4px;background:#1a73e8;color:#fff;border:none;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:500;transition:background .12s;white-space:nowrap}
 .abtn:hover{background:#1558b8}
 .abtn svg{width:13px;height:13px;fill:#fff;flex-shrink:0}
@@ -112,7 +97,6 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
 .abtn.out:hover{background:#f5f5f5}
 .abtn.out svg{fill:#444}
 .adv{display:flex;align-items:center;gap:4px;font-size:12px;color:#666;cursor:pointer;margin-left:auto;white-space:nowrap}
-
 .entries-scroll{flex:1;overflow-y:auto}
 .erow{display:flex;align-items:center;padding:7px 12px;border-bottom:1px solid #f2f2f2;transition:background .1s;cursor:default}
 .erow:hover{background:#fafafa}
@@ -121,113 +105,80 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
 .edel{background:none;border:none;color:transparent;cursor:pointer;font-size:15px;padding:0 3px;line-height:1}
 .erow:hover .edel{color:#ddd}
 .edel:hover{color:#e53935!important}
-
 .add-row{padding:10px 12px;border-top:1px solid #e0e0e0;flex-shrink:0;display:flex;gap:7px}
 .ainput{flex:1;padding:8px 10px;border:1px solid #ccc;border-radius:4px;font-family:'Roboto',sans-serif;font-size:14px;outline:none;transition:border-color .12s}
 .ainput:focus{border-color:#1a73e8}
 .ainput::placeholder{color:#ccc}
 .add-plus{background:#1a73e8;color:#fff;border:none;border-radius:4px;padding:8px 13px;cursor:pointer;font-size:18px;font-weight:700;line-height:1;transition:background .12s}
 .add-plus:hover{background:#1558b8}
-
 .panel-foot{padding:9px 12px;border-top:1px solid #e0e0e0;flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
 .aw-wrap{display:flex}
-.aw-btn{display:flex;align-items:center;gap:4px;background:#1a73e8;color:#fff;border:none;border-radius:4px 0 0 4px;padding:7px 10px;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:500;transition:background .12s}
-.aw-btn:hover{background:#1558b8}
+.aw-btn{display:flex;align-items:center;gap:4px;background:#1a73e8;color:#fff;border:none;border-radius:4px 0 0 4px;padding:7px 10px;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:500}
 .aw-btn svg{width:12px;height:12px;fill:#fff}
 .beta{background:#fbbc04;color:#333;font-size:10px;font-weight:700;border-radius:3px;padding:1px 5px;margin-right:3px}
-.aw-dd{background:#1a73e8;color:#fff;border:none;border-radius:0 4px 4px 0;border-left:1px solid rgba(255,255,255,.3);padding:7px 7px;cursor:pointer;font-size:12px;transition:background .12s}
-.aw-dd:hover{background:#1558b8}
+.aw-dd{background:#1a73e8;color:#fff;border:none;border-radius:0 4px 4px 0;border-left:1px solid rgba(255,255,255,.3);padding:7px 7px;cursor:pointer;font-size:12px}
 .ver{font-size:11px;color:#ccc}
-
 .results-view{flex:1;overflow-y:auto;padding:10px 14px}
 .ritem{padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:#444}
 
-/* ═══════════════════════════════════════════
-   COIN TAB
-═══════════════════════════════════════════ */
-.coin-tab{flex:1;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);
-  position:relative;overflow:hidden}
-.coin-tab::before{content:'';position:fixed;inset:0;
-  background-image:radial-gradient(1px 1px at 20% 30%,rgba(255,255,255,.3) 0%,transparent 100%),
-    radial-gradient(1px 1px at 60% 15%,rgba(255,255,255,.2) 0%,transparent 100%),
-    radial-gradient(1.5px 1.5px at 40% 70%,rgba(255,255,255,.25) 0%,transparent 100%),
-    radial-gradient(1px 1px at 80% 55%,rgba(255,255,255,.2) 0%,transparent 100%),
-    radial-gradient(1px 1px at 10% 80%,rgba(255,255,255,.15) 0%,transparent 100%);
-  pointer-events:none}
-
+/* COIN TAB */
+.coin-tab{flex:1;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);position:relative;overflow:hidden}
 .coin-stage{display:flex;flex-direction:column;align-items:center;gap:20px;z-index:1}
-.coin-outer{width:min(55vw,340px);height:min(55vw,340px);perspective:900px;cursor:pointer;flex-shrink:0}
+.coin-outer{width:min(50vw,300px);height:min(50vw,300px);perspective:900px;cursor:pointer;flex-shrink:0}
 .coin{width:100%;height:100%;position:relative;transform-style:preserve-3d;border-radius:50%}
-.coin-face{position:absolute;inset:0;border-radius:50%;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;font-family:'Bangers',cursive;font-size:clamp(1.4rem,4vw,2.2rem);letter-spacing:3px;box-shadow:inset 0 0 0 10px rgba(0,0,0,.15),0 8px 40px rgba(0,0,0,.4)}
-.coin-face .ci{font-size:clamp(2.5rem,7vw,4rem);line-height:1}
+.coin-face{position:absolute;inset:0;border-radius:50%;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;font-family:'Bangers',cursive;font-size:clamp(1.4rem,4vw,2rem);letter-spacing:3px;box-shadow:inset 0 0 0 10px rgba(0,0,0,.15),0 8px 40px rgba(0,0,0,.4)}
+.coin-face .ci{font-size:clamp(2.5rem,6vw,3.5rem);line-height:1}
 .coin-face.back{transform:rotateY(180deg)}
 .coin.tails{transform:rotateY(180deg)}
 @keyframes flipH{0%{transform:rotateY(0)}100%{transform:rotateY(720deg)}}
 @keyframes flipT{0%{transform:rotateY(0)}100%{transform:rotateY(900deg)}}
 .coin.anim-h{animation:flipH .75s ease forwards}
 .coin.anim-t{animation:flipT .75s ease forwards}
-
-.coin-result{font-family:'Bangers',cursive;font-size:clamp(1.8rem,5vw,2.8rem);letter-spacing:4px;color:#fff;min-height:3.5rem;display:flex;align-items:center;text-shadow:0 0 30px rgba(255,209,102,.6)}
-.coin-flip-btn{background:linear-gradient(135deg,#ff6b35,#e8522a);color:#fff;border:none;border-radius:12px;padding:14px 44px;font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:2px;cursor:pointer;box-shadow:0 4px 20px rgba(255,107,53,.45);transition:transform .15s,box-shadow .15s}
-.coin-flip-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(255,107,53,.55)}
-.coin-flip-btn:active{transform:scale(.97)}
-.coin-stats{display:flex;gap:20px;font-size:.88rem;color:rgba(255,255,255,.6);font-weight:600}
+.coin-result{font-family:'Bangers',cursive;font-size:clamp(1.8rem,4vw,2.5rem);letter-spacing:4px;color:#fff;min-height:3rem;display:flex;align-items:center;text-shadow:0 0 30px rgba(255,209,102,.6)}
+.coin-flip-btn{background:linear-gradient(135deg,#ff6b35,#e8522a);color:#fff;border:none;border-radius:12px;padding:12px 40px;font-family:'Bangers',cursive;font-size:1.4rem;letter-spacing:2px;cursor:pointer;box-shadow:0 4px 20px rgba(255,107,53,.45);transition:transform .15s}
+.coin-flip-btn:hover{transform:translateY(-2px)}
+.coin-stats{display:flex;gap:20px;font-size:.85rem;color:rgba(255,255,255,.6);font-weight:600}
 .coin-stats b{color:#fff}
-
-/* Coin right panel */
-.coin-right{width:240px;flex-shrink:0;background:rgba(255,255,255,.06);border-left:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;gap:0;overflow:hidden}
-.cr-section{padding:14px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.reset-btn{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);border-radius:6px;padding:4px 10px;font-size:.74rem;font-weight:600;cursor:pointer;font-family:'Roboto',sans-serif;transition:all .12s}
+.reset-btn:hover{background:rgba(255,255,255,.1);color:#fff}
+.coin-right{width:240px;flex-shrink:0;background:rgba(255,255,255,.06);border-left:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;overflow-y:auto}
+.cr-section{padding:14px}
 .cr-title{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.4);margin-bottom:8px}
 .swatches-h{display:flex;flex-wrap:wrap;gap:6px}
-.swatch{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:transform .1s,border-color .1s}
+.swatch{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:transform .1s}
 .swatch:hover{transform:scale(1.18)}
 .swatch.active{border-color:#fff!important}
-.cr-acc-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;padding:12px 14px;transition:background .12s}
+.cr-acc-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:12px 14px;transition:background .12s;border-top:1px solid rgba(255,255,255,.07)}
 .cr-acc-header:hover{background:rgba(255,255,255,.05)}
 .cr-acc-left{display:flex;align-items:center;gap:7px;font-size:.83rem;font-weight:600;color:rgba(255,255,255,.8)}
 .cr-pill{background:rgba(255,80,80,.2);color:#ff7070;border-radius:20px;padding:1px 8px;font-size:.7rem;font-weight:800}
 .cr-pill.on{background:rgba(100,220,150,.2);color:#80d8a0}
-.cr-acc-body{display:none;padding:0 14px 12px;border-top:1px solid rgba(255,255,255,.06)}
+.cr-acc-body{display:none;padding:0 14px 12px}
 .cr-acc-body.open{display:block}
 .pct-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;margin-top:8px}
 .pct-label{font-size:.8rem;color:rgba(255,255,255,.5)}
 .pct-val{font-size:.85rem;font-weight:800;color:#ffd166}
 .shints{display:flex;justify-content:space-between;font-size:.68rem;color:rgba(255,255,255,.3)}
-.reset-btn{background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.4);border-radius:6px;padding:4px 10px;font-size:.74rem;font-weight:600;cursor:pointer;font-family:'Roboto',sans-serif;transition:all .12s}
-.reset-btn:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7)}
-
-/* music in coin/dice */
-.music-section{padding:12px 14px;border-top:1px solid rgba(255,255,255,.08)}
-.music-sec-title{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.4);margin-bottom:8px}
+input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;margin:4px 0}
 .music-inp-dark{width:100%;padding:7px 10px;border:1px solid rgba(255,255,255,.15);border-radius:6px;font-family:'Roboto',sans-serif;font-size:12px;outline:none;background:rgba(255,255,255,.08);color:#fff;margin-bottom:5px}
 .music-inp-dark::placeholder{color:rgba(255,255,255,.3)}
-.music-inp-dark:focus{border-color:#ff6b35}
 .music-row-dark{display:flex;gap:5px;margin-bottom:5px}
 .music-inp-sm{flex:1;padding:6px 8px;border:1px solid rgba(255,255,255,.15);border-radius:6px;font-family:'Roboto',sans-serif;font-size:11px;outline:none;background:rgba(255,255,255,.08);color:#fff;min-width:0}
-.music-inp-sm::placeholder{color:rgba(255,255,255,.3)}
-.music-inp-sm:focus{border-color:#ff6b35}
-.music-save-dark{background:linear-gradient(135deg,#8a4fff,#6a30d0);color:#fff;border:none;border-radius:6px;padding:6px 10px;cursor:pointer;font-family:'Roboto',sans-serif;font-size:12px;font-weight:700;white-space:nowrap;transition:opacity .12s}
-.music-save-dark:hover{opacity:.85}
-.music-tog-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.music-save-dark{background:#8a4fff;color:#fff;border:none;border-radius:6px;padding:6px 10px;cursor:pointer;font-size:12px;font-weight:700}
+.music-tog-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .music-tog-label{font-size:.8rem;color:rgba(255,255,255,.6)}
 .tog-dark{width:38px;height:20px;background:rgba(255,255,255,.15);border-radius:10px;position:relative;cursor:pointer;transition:background .2s;border:none;flex-shrink:0}
 .tog-dark.on{background:#43a047}
-.tog-dark::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;background:#fff;border-radius:50%;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.tog-dark::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;background:#fff;border-radius:50%;transition:left .2s}
 .tog-dark.on::after{left:20px}
 .music-status-dark{font-size:.72rem;color:#80d8a0;min-height:14px}
 
-/* ═══════════════════════════════════════════
-   DICE TAB
-═══════════════════════════════════════════ */
-.dice-tab{flex:1;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,#0d0221 0%,#11052c 40%,#190a3a 100%);
-  position:relative;overflow:hidden}
-
+/* DICE TAB */
+.dice-tab{flex:1;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0d0221 0%,#11052c 40%,#190a3a 100%);position:relative;overflow:hidden}
 .dice-stage{display:flex;flex-direction:column;align-items:center;gap:16px;z-index:1;padding:20px}
 .dice-type-row{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
 .dtype-btn{padding:5px 14px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-size:.82rem;font-weight:700;cursor:pointer;font-family:'Roboto',sans-serif;transition:all .12s}
-.dtype-btn.active{background:linear-gradient(135deg,#ff6b35,#e8522a);border-color:transparent;color:#fff;box-shadow:0 2px 10px rgba(255,107,53,.4)}
+.dtype-btn.active{background:linear-gradient(135deg,#ff6b35,#e8522a);border-color:transparent;color:#fff}
 .dice-count-row{display:flex;align-items:center;gap:12px;font-size:.9rem;font-weight:700;color:rgba(255,255,255,.6)}
 .count-btn{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .12s}
 .count-btn:hover{background:rgba(255,255,255,.15)}
@@ -236,21 +187,16 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
 .die:hover{box-shadow:0 6px 28px rgba(255,107,53,.3);transform:translateY(-2px)}
 @keyframes diceShake{0%{transform:rotate(0) scale(1)}20%{transform:rotate(-12deg) scale(1.08)}40%{transform:rotate(10deg) scale(1.08)}60%{transform:rotate(-8deg) scale(1.05)}80%{transform:rotate(6deg) scale(1.05)}100%{transform:rotate(0) scale(1)}}
 .die.rolling{animation:diceShake .5s ease forwards}
-.dice-result{font-family:'Bangers',cursive;font-size:2.2rem;letter-spacing:3px;color:#fff;min-height:3rem;display:flex;align-items:center;text-shadow:0 0 20px rgba(255,107,53,.5)}
-.dice-roll-btn{background:linear-gradient(135deg,#ff6b35,#e8522a);color:#fff;border:none;border-radius:12px;padding:14px 44px;font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:2px;cursor:pointer;box-shadow:0 4px 20px rgba(255,107,53,.45);transition:transform .15s,box-shadow .15s}
-.dice-roll-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(255,107,53,.55)}
-.dice-roll-btn:active{transform:scale(.97)}
-.dice-stats{display:flex;gap:20px;font-size:.88rem;color:rgba(255,255,255,.5);font-weight:600}
+.dice-result{font-family:'Bangers',cursive;font-size:2rem;letter-spacing:3px;color:#fff;min-height:3rem;display:flex;align-items:center;text-shadow:0 0 20px rgba(255,107,53,.5)}
+.dice-roll-btn{background:linear-gradient(135deg,#ff6b35,#e8522a);color:#fff;border:none;border-radius:12px;padding:12px 40px;font-family:'Bangers',cursive;font-size:1.4rem;letter-spacing:2px;cursor:pointer;box-shadow:0 4px 20px rgba(255,107,53,.45);transition:transform .15s}
+.dice-roll-btn:hover{transform:translateY(-2px)}
+.dice-stats{display:flex;gap:20px;font-size:.85rem;color:rgba(255,255,255,.5);font-weight:600}
 .dice-stats b{color:#fff}
+.dice-right{width:240px;flex-shrink:0;background:rgba(255,255,255,.04);border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;overflow-y:auto}
 
-/* Dice right panel */
-.dice-right{width:240px;flex-shrink:0;background:rgba(255,255,255,.04);border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;overflow:hidden;overflow-y:auto}
-
-/* ── CONFETTI ── */
+/* CONFETTI */
 @keyframes cf{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
 .cp{position:fixed;width:9px;height:9px;top:-10px;pointer-events:none;z-index:9999;border-radius:2px;animation:cf linear forwards}
-
-/* YouTube hidden */
 #yt-player{position:fixed;bottom:-9999px;left:-9999px;width:2px;height:2px;opacity:0;pointer-events:none}
 </style>
 </head>
@@ -258,22 +204,14 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
 
 <!-- TOP BAR -->
 <div class="topbar">
-  <!-- ACCURATE wheelofnames logo -->
   <div class="brand">
-    <!-- The real wheelofnames logo: colorful pie/wheel segments icon -->
-    <svg width="34" height="34" viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
-      <!-- Red segment top-right -->
+    <svg width="32" height="32" viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
       <path d="M17 17 L17 1 A16 16 0 0 1 33 17 Z" fill="#e53935"/>
-      <!-- Orange segment right -->
       <path d="M17 17 L33 17 A16 16 0 0 1 17 33 Z" fill="#fb8c00"/>
-      <!-- Green segment bottom-left -->
       <path d="M17 17 L17 33 A16 16 0 0 1 1 17 Z" fill="#43a047"/>
-      <!-- Blue segment left -->
       <path d="M17 17 L1 17 A16 16 0 0 1 17 1 Z" fill="#1e88e5"/>
-      <!-- White dividers -->
       <line x1="17" y1="1" x2="17" y2="33" stroke="#fff" stroke-width="1.5"/>
       <line x1="1" y1="17" x2="33" y2="17" stroke="#fff" stroke-width="1.5"/>
-      <!-- Center hub -->
       <circle cx="17" cy="17" r="4" fill="#fff"/>
       <circle cx="17" cy="17" r="2" fill="#e0e0e0"/>
     </svg>
@@ -282,11 +220,19 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
 
   <div class="nav-sep"></div>
 
-  <!-- App mode tabs -->
-  <div class="app-tabs">
-    <button class="atab active" id="atab-wheel" onclick="switchApp('wheel')">🎡 Wheel</button>
-    <button class="atab" id="atab-coin" onclick="switchApp('coin')">🪙 Coin</button>
-    <button class="atab" id="atab-dice" onclick="switchApp('dice')">🎲 Dice</button>
+  <!-- Hamburger for switching apps -->
+  <div class="hamburger-wrap" id="hamWrap">
+    <button class="hamburger-btn" onclick="toggleHamMenu()">
+      <div class="hlines"><span></span><span></span><span></span></div>
+      Apps
+    </button>
+    <div class="ham-dropdown" id="hamMenu">
+      <div class="ham-item" onclick="switchApp('wheel');toggleHamMenu()"><span class="ham-icon">🎡</span> Wheel</div>
+      <div class="ham-sep"></div>
+      <div class="ham-item" onclick="switchApp('coin');toggleHamMenu()"><span class="ham-icon">🪙</span> Coin Flip</div>
+      <div class="ham-sep"></div>
+      <div class="ham-item" onclick="switchApp('dice');toggleHamMenu()"><span class="ham-icon">🎲</span> Dice Roller</div>
+    </div>
   </div>
 
   <div class="nav-sep"></div>
@@ -322,16 +268,15 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
 <!-- MAIN -->
 <div class="main">
 
-  <!-- ═══ WHEEL TAB ═══ -->
+  <!-- WHEEL TAB -->
   <div class="tab-view active" id="tv-wheel">
     <div class="wheel-tab">
       <div class="wheel-stage" id="wheelStage">
         <button class="edit-btn"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
         <div class="ad-bar"><span>Report bad ad 🚩</span><span>Close ads ✕</span></div>
-
         <div class="wheel-wrap" id="wheelWrap">
           <canvas id="wheelCanvas" onclick="spinWheel()"></canvas>
-          <div class="spin-overlay" id="spinOverlay">
+          <div class="spin-overlay">
             <div class="spin-main" id="spinMain">Click to spin</div>
             <div class="spin-sub" id="spinSub">or press ctrl+enter</div>
           </div>
@@ -342,44 +287,26 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
             </svg>
           </div>
         </div>
-
         <div class="footer-bar">Do Not Sell or Share My Personal Information</div>
-
-        <!-- Floating action buttons -->
         <div class="float-btns">
           <button class="fbtn" id="cheatBtn" onclick="togglePanel('cheat')">⚡ Cheat Mode</button>
           <button class="fbtn" id="wmusicBtn" onclick="togglePanel('wmusic')">🎵 Win Music</button>
         </div>
-
-        <!-- Cheat panel -->
         <div class="float-panel" id="cheatPanel">
           <div class="fp-head"><span class="fp-title">⚡ Force Result</span><button class="fp-x" onclick="togglePanel('cheat')">✕</button></div>
           <div class="force-grid" id="forceGrid"></div>
           <div style="font-size:10px;color:#bbb;margin-top:8px">Tap to force, tap again to clear</div>
         </div>
-
-        <!-- Win Music panel -->
         <div class="float-panel" id="wmusicPanel" style="bottom:130px">
           <div class="fp-head"><span class="fp-title">🎵 Win Music</span><button class="fp-x" onclick="togglePanel('wmusic')">✕</button></div>
-          <div class="music-toggle-row">
-            <span class="music-toggle-label">Enable win music</span>
-            <button class="tog" id="wmusicTog" onclick="toggleMusicEnabled('wheel')"></button>
-          </div>
+          <div class="music-toggle-row"><span class="music-toggle-label">Enable win music</span><button class="tog" id="wmusicTog" onclick="toggleMusicEnabled('wheel')"></button></div>
           <div class="music-label">YouTube link</div>
-          <input class="music-input" id="wheelYtUrl" placeholder="https://youtube.com/watch?v=…" oninput="onUrlInput('wheel')"/>
+          <input class="music-input" id="wheelYtUrl" placeholder="https://youtube.com/watch?v=…"/>
           <div style="display:flex;gap:6px">
-            <div style="flex:1">
-              <div class="music-label">Start (sec)</div>
-              <input class="music-input" id="wheelYtStart" type="number" min="0" value="0" placeholder="0" style="margin-bottom:0"/>
-            </div>
-            <div style="flex:1">
-              <div class="music-label">Duration (sec)</div>
-              <input class="music-input" id="wheelYtDur" type="number" min="1" value="10" placeholder="10" style="margin-bottom:0"/>
-            </div>
+            <div style="flex:1"><div class="music-label">Start (sec)</div><input class="music-input" id="wheelYtStart" type="number" min="0" value="0" style="margin-bottom:0"/></div>
+            <div style="flex:1"><div class="music-label">Duration (sec)</div><input class="music-input" id="wheelYtDur" type="number" min="1" value="10" style="margin-bottom:0"/></div>
           </div>
-          <div style="margin-top:8px;text-align:right">
-            <button class="music-save" onclick="saveMusic('wheel')">💾 Save</button>
-          </div>
+          <div style="margin-top:8px;text-align:right"><button class="music-save" onclick="saveMusic('wheel')">💾 Save</button></div>
           <div class="music-status" id="wheelMusicStatus"></div>
         </div>
       </div>
@@ -406,7 +333,7 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
           </div>
           <div class="entries-scroll" id="entriesList"></div>
           <div class="add-row">
-            <input class="ainput" id="newEntry" placeholder="Add entry…" maxlength="30" onkeydown="if(event.key==='Enter')addEntry()"/>
+            <input class="ainput" id="newEntry" placeholder="Add entry…" maxlength="40" onkeydown="if(event.key==='Enter')addEntry()"/>
             <button class="add-plus" onclick="addEntry()">+</button>
           </div>
         </div>
@@ -424,7 +351,7 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
     </div>
   </div>
 
-  <!-- ═══ COIN TAB ═══ -->
+  <!-- COIN TAB -->
   <div class="tab-view" id="tv-coin">
     <div class="coin-tab">
       <div class="coin-stage">
@@ -443,56 +370,43 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
           <button class="reset-btn" onclick="resetCoin()">Reset</button>
         </div>
       </div>
-
-      <!-- Coin right panel -->
       <div class="coin-right">
         <div class="cr-section">
           <div class="cr-title">Heads Color</div>
           <div class="swatches-h" id="headSwatches"></div>
         </div>
-        <div class="cr-section">
+        <div class="cr-section" style="border-top:1px solid rgba(255,255,255,.07)">
           <div class="cr-title">Tails Color</div>
           <div class="swatches-h" id="tailSwatches"></div>
         </div>
-
-        <!-- Cheat accordion -->
-        <div>
-          <div class="cr-acc-header" onclick="toggleCrAcc('coinCheat')">
-            <div class="cr-acc-left">⚡ Cheat Mode <span class="cr-pill" id="coinCheatPill">OFF</span></div>
-            <span id="coinCheatArrow" style="color:rgba(255,255,255,.4);font-size:.7rem">▼</span>
-          </div>
-          <div class="cr-acc-body" id="coinCheatBody">
-            <div class="pct-row"><span class="pct-label">Heads chance</span><b class="pct-val" id="coinPctVal">50%</b></div>
-            <input type="range" min="0" max="100" value="50" id="coinSlider" oninput="coinPct=+this.value;document.getElementById('coinPctVal').textContent=this.value+'%'"/>
-            <div class="shints"><span>Always Tails</span><span>Always Heads</span></div>
-          </div>
+        <div class="cr-acc-header" onclick="toggleCrAcc('coinCheat')">
+          <div class="cr-acc-left">⚡ Cheat Mode <span class="cr-pill" id="coinCheatPill">OFF</span></div>
+          <span id="coinCheatArrow" style="color:rgba(255,255,255,.4);font-size:.7rem">▼</span>
         </div>
-
-        <!-- Win Music accordion -->
-        <div>
-          <div class="cr-acc-header" onclick="toggleCrAcc('coinMusic')">
-            <div class="cr-acc-left">🎵 Win Music <span class="cr-pill" id="coinMusicPill">OFF</span></div>
-            <span id="coinMusicArrow" style="color:rgba(255,255,255,.4);font-size:.7rem">▼</span>
+        <div class="cr-acc-body" id="coinCheatBody">
+          <div class="pct-row"><span class="pct-label">Heads chance</span><b class="pct-val" id="coinPctVal">50%</b></div>
+          <input type="range" min="0" max="100" value="50" id="coinSlider" oninput="coinPct=+this.value;document.getElementById('coinPctVal').textContent=this.value+'%'"/>
+          <div class="shints"><span>Always Tails</span><span>Always Heads</span></div>
+        </div>
+        <div class="cr-acc-header" onclick="toggleCrAcc('coinMusic')">
+          <div class="cr-acc-left">🎵 Win Music <span class="cr-pill" id="coinMusicPill">OFF</span></div>
+          <span id="coinMusicArrow" style="color:rgba(255,255,255,.4);font-size:.7rem">▼</span>
+        </div>
+        <div class="cr-acc-body" id="coinMusicBody">
+          <div class="music-tog-row"><span class="music-tog-label">Enable</span><button class="tog-dark" id="coinMusicTog" onclick="toggleMusicEnabled('coin')"></button></div>
+          <input class="music-inp-dark" id="coinYtUrl" placeholder="YouTube link…"/>
+          <div class="music-row-dark">
+            <input class="music-inp-sm" id="coinYtStart" type="number" min="0" value="0" placeholder="Start sec"/>
+            <input class="music-inp-sm" id="coinYtDur" type="number" min="1" value="10" placeholder="Duration"/>
+            <button class="music-save-dark" onclick="saveMusic('coin')">💾</button>
           </div>
-          <div class="cr-acc-body" id="coinMusicBody">
-            <div class="music-tog-row">
-              <span class="music-tog-label">Enable</span>
-              <button class="tog-dark" id="coinMusicTog" onclick="toggleMusicEnabled('coin')"></button>
-            </div>
-            <input class="music-inp-dark" id="coinYtUrl" placeholder="YouTube link…" oninput="onUrlInput('coin')"/>
-            <div class="music-row-dark">
-              <input class="music-inp-sm" id="coinYtStart" type="number" min="0" value="0" placeholder="Start sec"/>
-              <input class="music-inp-sm" id="coinYtDur" type="number" min="1" value="10" placeholder="Duration"/>
-              <button class="music-save-dark" onclick="saveMusic('coin')">💾</button>
-            </div>
-            <div class="music-status-dark" id="coinMusicStatus"></div>
-          </div>
+          <div class="music-status-dark" id="coinMusicStatus"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ═══ DICE TAB ═══ -->
+  <!-- DICE TAB -->
   <div class="tab-view" id="tv-dice">
     <div class="dice-tab">
       <div class="dice-stage">
@@ -511,38 +425,29 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
           <button class="reset-btn" onclick="resetDice()">Reset</button>
         </div>
       </div>
-
-      <!-- Dice right panel -->
       <div class="dice-right">
-        <div style="border-bottom:1px solid rgba(255,255,255,.08)">
-          <div class="cr-acc-header" onclick="toggleCrAcc('diceCheat')">
-            <div class="cr-acc-left">⚡ Cheat Mode <span class="cr-pill" id="diceCheatPill">OFF</span></div>
-            <span id="diceCheatArrow" style="color:rgba(255,255,255,.4);font-size:.7rem">▼</span>
-          </div>
-          <div class="cr-acc-body" id="diceCheatBody">
-            <div class="pct-row"><span class="pct-label">Force value</span><b class="pct-val" id="diceForceVal">Random</b></div>
-            <input type="range" min="0" max="20" value="0" id="diceForceSlider" oninput="updateDiceForce(this.value)"/>
-            <div class="shints"><span>Random</span><span>Max</span></div>
-          </div>
+        <div class="cr-acc-header" onclick="toggleCrAcc('diceCheat')">
+          <div class="cr-acc-left">⚡ Cheat Mode <span class="cr-pill" id="diceCheatPill">OFF</span></div>
+          <span id="diceCheatArrow" style="color:rgba(255,255,255,.4);font-size:.7rem">▼</span>
         </div>
-        <div>
-          <div class="cr-acc-header" onclick="toggleCrAcc('diceMusic')">
-            <div class="cr-acc-left">🎵 Win Music <span class="cr-pill" id="diceMusicPill">OFF</span></div>
-            <span id="diceMusicArrow" style="color:rgba(255,255,255,.4);font-size:.7rem">▼</span>
+        <div class="cr-acc-body" id="diceCheatBody">
+          <div class="pct-row"><span class="pct-label">Force value</span><b class="pct-val" id="diceForceVal">Random</b></div>
+          <input type="range" min="0" max="20" value="0" id="diceForceSlider" oninput="updateDiceForce(this.value)"/>
+          <div class="shints"><span>Random</span><span>Max</span></div>
+        </div>
+        <div class="cr-acc-header" onclick="toggleCrAcc('diceMusic')">
+          <div class="cr-acc-left">🎵 Win Music <span class="cr-pill" id="diceMusicPill">OFF</span></div>
+          <span id="diceMusicArrow" style="color:rgba(255,255,255,.4);font-size:.7rem">▼</span>
+        </div>
+        <div class="cr-acc-body" id="diceMusicBody">
+          <div class="music-tog-row"><span class="music-tog-label">Enable</span><button class="tog-dark" id="diceMusicTog" onclick="toggleMusicEnabled('dice')"></button></div>
+          <input class="music-inp-dark" id="diceYtUrl" placeholder="YouTube link…"/>
+          <div class="music-row-dark">
+            <input class="music-inp-sm" id="diceYtStart" type="number" min="0" value="0" placeholder="Start sec"/>
+            <input class="music-inp-sm" id="diceYtDur" type="number" min="1" value="10" placeholder="Duration"/>
+            <button class="music-save-dark" onclick="saveMusic('dice')">💾</button>
           </div>
-          <div class="cr-acc-body" id="diceMusicBody">
-            <div class="music-tog-row">
-              <span class="music-tog-label">Enable</span>
-              <button class="tog-dark" id="diceMusicTog" onclick="toggleMusicEnabled('dice')"></button>
-            </div>
-            <input class="music-inp-dark" id="diceYtUrl" placeholder="YouTube link…" oninput="onUrlInput('dice')"/>
-            <div class="music-row-dark">
-              <input class="music-inp-sm" id="diceYtStart" type="number" min="0" value="0" placeholder="Start sec"/>
-              <input class="music-inp-sm" id="diceYtDur" type="number" min="1" value="10" placeholder="Duration"/>
-              <button class="music-save-dark" onclick="saveMusic('dice')">💾</button>
-            </div>
-            <div class="music-status-dark" id="diceMusicStatus"></div>
-          </div>
+          <div class="music-status-dark" id="diceMusicStatus"></div>
         </div>
       </div>
     </div>
@@ -553,170 +458,100 @@ input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;marg
 <div id="yt-player"></div>
 
 <script>
-// ══════════════════════════════════════════════════════════
+// HAMBURGER
+function toggleHamMenu(){document.getElementById('hamMenu').classList.toggle('open')}
+document.addEventListener('click',function(e){if(!document.getElementById('hamWrap').contains(e.target))document.getElementById('hamMenu').classList.remove('open')});
+
 // YOUTUBE
-// ══════════════════════════════════════════════════════════
 var ytPlayer=null,ytReady=false,ytPlayerReady=false,stopMusicTimer=null;
-window.onYouTubeIframeAPIReady=function(){
-  ytReady=true;
-  ytPlayer=new YT.Player('yt-player',{height:'1',width:'1',videoId:'',
-    playerVars:{autoplay:0,controls:0,enablejsapi:1},
-    events:{onReady:function(){ytPlayerReady=true;ytPlayer.setVolume(80)}}});
-};
+window.onYouTubeIframeAPIReady=function(){ytReady=true;ytPlayer=new YT.Player('yt-player',{height:'1',width:'1',videoId:'',playerVars:{autoplay:0,controls:0,enablejsapi:1},events:{onReady:function(){ytPlayerReady=true;ytPlayer.setVolume(80)}}})};
 function loadYT(){if(document.getElementById('yt-api'))return;var s=document.createElement('script');s.id='yt-api';s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s)}
 function extractVid(url){var m=url.match(/(?:youtu\.be\/|v=|\/v\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);return m?m[1]:null}
+var musicSettings={wheel:{url:'',startSec:0,duration:10,enabled:false},coin:{url:'',startSec:0,duration:10,enabled:false},dice:{url:'',startSec:0,duration:10,enabled:false}};
+function toggleMusicEnabled(tab){var s=musicSettings[tab];s.enabled=!s.enabled;var togId=tab==='wheel'?'wmusicTog':tab+'MusicTog';var tog=document.getElementById(togId);if(tog)tog.classList.toggle('on',s.enabled);var pill=document.getElementById(tab+'MusicPill');if(pill){pill.textContent=s.enabled?'ON':'OFF';pill.className='cr-pill'+(s.enabled?' on':'')};if(s.enabled&&!ytReady)loadYT()}
+function saveMusic(tab){var url=document.getElementById(tab+'YtUrl').value.trim();var start=parseInt(document.getElementById(tab+'YtStart').value)||0;var dur=parseInt(document.getElementById(tab+'YtDur').value)||10;musicSettings[tab].url=url;musicSettings[tab].startSec=start;musicSettings[tab].duration=dur;var vid=extractVid(url);var el=document.getElementById(tab+'MusicStatus');if(!el)return;if(url&&!vid){el.style.color='#ff7070';el.textContent='⚠ Invalid URL'}else{el.style.color='#80d8a0';el.textContent=vid?'✓ Saved!':'✓ Cleared';if(vid&&!ytReady)loadYT()}setTimeout(function(){el.textContent=''},3000)}
+function playWinMusic(tab){var s=musicSettings[tab];if(!s.enabled||!s.url)return;var vid=extractVid(s.url);if(!vid)return;var dur=(s.duration||10)*1000,start=s.startSec||0;function doPlay(){try{if(stopMusicTimer)clearTimeout(stopMusicTimer);ytPlayer.mute();ytPlayer.loadVideoById({videoId:vid,startSeconds:start});ytPlayer.playVideo();setTimeout(function(){try{ytPlayer.unMute();ytPlayer.setVolume(80)}catch(e){}},800);stopMusicTimer=setTimeout(function(){try{ytPlayer.stopVideo()}catch(e){}},dur)}catch(e){}}if(ytPlayerReady){doPlay()}else{loadYT();var att=0;var ck=setInterval(function(){att++;if(ytPlayerReady){clearInterval(ck);doPlay()}if(att>40)clearInterval(ck)},200)}}
 
-var musicSettings={
-  wheel:{url:'',startSec:0,duration:10,enabled:false},
-  coin:{url:'',startSec:0,duration:10,enabled:false},
-  dice:{url:'',startSec:0,duration:10,enabled:false}
-};
-
-function toggleMusicEnabled(tab){
-  var s=musicSettings[tab]; s.enabled=!s.enabled;
-  var togId=tab==='wheel'?'wmusicTog':tab+'MusicTog';
-  var tog=document.getElementById(togId);
-  if(tog){tog.classList.toggle('on',s.enabled)}
-  var pillId=tab+'MusicPill';
-  var pill=document.getElementById(pillId);
-  if(pill){pill.textContent=s.enabled?'ON':'OFF';pill.className='cr-pill'+(s.enabled?' on':'')}
-  if(tab==='wheel'){
-    var wp=document.getElementById('wmusicTog');
-    if(wp)wp.className='tog'+(s.enabled?' on':'');
-  }
-  if(s.enabled&&!ytReady)loadYT();
-}
-
-function saveMusic(tab){
-  var url=document.getElementById(tab+'YtUrl').value.trim();
-  var start=parseInt(document.getElementById(tab+'YtStart').value)||0;
-  var dur=parseInt(document.getElementById(tab+'YtDur').value)||10;
-  musicSettings[tab].url=url; musicSettings[tab].startSec=start; musicSettings[tab].duration=dur;
-  var vid=extractVid(url);
-  var sid=tab+'MusicStatus';
-  var el=document.getElementById(sid);
-  if(!el)return;
-  if(url&&!vid){el.style.color='#ff7070';el.textContent='⚠ Invalid YouTube URL'}
-  else{el.style.color='#80d8a0';el.textContent=vid?'✓ Saved!':'✓ Cleared';if(vid&&!ytReady)loadYT()}
-  setTimeout(function(){el.textContent=''},3000);
-}
-
-function onUrlInput(tab){}
-
-function playWinMusic(tab){
-  var s=musicSettings[tab];
-  if(!s.enabled||!s.url)return;
-  var vid=extractVid(s.url); if(!vid)return;
-  var dur=(s.duration||10)*1000, start=s.startSec||0;
-  function doPlay(){
-    try{
-      if(stopMusicTimer)clearTimeout(stopMusicTimer);
-      ytPlayer.mute(); ytPlayer.loadVideoById({videoId:vid,startSeconds:start}); ytPlayer.playVideo();
-      setTimeout(function(){try{ytPlayer.unMute();ytPlayer.setVolume(80)}catch(e){}},800);
-      stopMusicTimer=setTimeout(function(){try{ytPlayer.stopVideo()}catch(e){}},dur);
-    }catch(e){}
-  }
-  if(ytPlayerReady){doPlay()}else{loadYT();var att=0;var ck=setInterval(function(){att++;if(ytPlayerReady){clearInterval(ck);doPlay()}if(att>40)clearInterval(ck)},200)}
-}
-
-// ══════════════════════════════════════════════════════════
 // APP TABS
-// ══════════════════════════════════════════════════════════
-function switchApp(name){
-  ['wheel','coin','dice'].forEach(function(t){
-    document.getElementById('tv-'+t).classList.toggle('active',t===name);
-    document.getElementById('atab-'+t).classList.toggle('active',t===name);
-  });
-  if(name==='wheel'){sizeCanvas();drawWheel()}
-}
+function switchApp(name){['wheel','coin','dice'].forEach(function(t){document.getElementById('tv-'+t).classList.toggle('active',t===name)});if(name==='wheel'){sizeCanvas();drawWheel()}}
 
-// ══════════════════════════════════════════════════════════
-// ACCORDION (coin/dice panels)
-// ══════════════════════════════════════════════════════════
+// ACCORDION
 var crOpen={};
-function toggleCrAcc(id){
-  crOpen[id]=!crOpen[id];var open=crOpen[id];
-  var body=document.getElementById(id+'Body');
-  var arrow=document.getElementById(id+'Arrow');
-  var pill=document.getElementById(id+'Pill');
-  if(body)body.className='cr-acc-body'+(open?' open':'');
-  if(arrow)arrow.textContent=open?'▲':'▼';
-  if(pill){
-    if(id.indexOf('Cheat')>-1||id.indexOf('Music')>-1){
-      pill.textContent=open?'OPEN':'OFF';
-      pill.className='cr-pill'+(open?' on':'');
-    }
-  }
-}
+function toggleCrAcc(id){crOpen[id]=!crOpen[id];var open=crOpen[id];var body=document.getElementById(id+'Body');var arrow=document.getElementById(id+'Arrow');var pill=document.getElementById(id+'Pill');if(body)body.className='cr-acc-body'+(open?' open':'');if(arrow)arrow.textContent=open?'▲':'▼';if(pill){pill.textContent=open?'OPEN':'OFF';pill.className='cr-pill'+(open?' on':'')}}
 
-// ══════════════════════════════════════════════════════════
-// FLOATING PANELS (wheel)
-// ══════════════════════════════════════════════════════════
+// FLOATING PANELS
 var panelOpen={cheat:false,wmusic:false};
-function togglePanel(id){
-  panelOpen[id]=!panelOpen[id];
-  document.getElementById(id+'Panel').classList.toggle('open',panelOpen[id]);
-  var btn=document.getElementById(id==='cheat'?'cheatBtn':'wmusicBtn');
-  btn.classList.toggle('active-btn',panelOpen[id]);
-  if(id==='cheat')updateForceGrid();
-}
+function togglePanel(id){panelOpen[id]=!panelOpen[id];document.getElementById(id+'Panel').classList.toggle('open',panelOpen[id]);document.getElementById(id==='cheat'?'cheatBtn':'wmusicBtn').classList.toggle('active-btn',panelOpen[id]);if(id==='cheat')updateForceGrid()}
 
-// ══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════
 // WHEEL
-// ══════════════════════════════════════════════════════════
-var entries=[{label:'ZERX',color:'#e53935'},{label:'CHAT',color:'#1e88e5'}];
+// ═══════════════════════════════════════
+var entries=[];
 var WC=['#e53935','#1e88e5','#fb8c00','#43a047','#8e24aa','#00897b','#f4511e','#3949ab','#fdd835','#00acc1'];
 var wheelAngle=0,spinning=false,forcedIdx=-1,spinResults=[];
 var sz=500;
 
 function sizeCanvas(){
-  var stage=document.getElementById('wheelStage');
-  if(!stage)return;
-  var w=stage.clientWidth-60,h=stage.clientHeight-100;
+  var stage=document.getElementById('wheelStage');if(!stage)return;
+  var w=stage.clientWidth-80,h=stage.clientHeight-80;
   sz=Math.max(180,Math.min(w,h,580));
-  var c=document.getElementById('wheelCanvas');
-  c.width=sz;c.height=sz;
+  var c=document.getElementById('wheelCanvas');c.width=sz;c.height=sz;
   var ps=Math.max(26,sz*.075);
-  var ptr=document.getElementById('pointerSvg');
-  ptr.style.width=ps+'px';ptr.style.height=(ps*1.55)+'px';
+  document.getElementById('pointerSvg').style.width=ps+'px';
+  document.getElementById('pointerSvg').style.height=(ps*1.55)+'px';
   document.getElementById('pointerWrap').style.right=(-ps*.52)+'px';
   drawWheel();
 }
 
 function drawWheel(){
   var c=document.getElementById('wheelCanvas');if(!c)return;
-  var ctx=c.getContext('2d'),cx=sz/2,cy=sz/2,r=sz/2-2,n=entries.length;
+  var ctx=c.getContext('2d'),cx=sz/2,cy=sz/2,r=sz/2-3,n=entries.length;
   ctx.clearRect(0,0,sz,sz);
   if(!n){
-    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle='#e8e8e8';ctx.fill();
-    ctx.fillStyle='#999';ctx.font='bold 16px Roboto,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText('Add entries!',cx,cy);return;
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+    ctx.fillStyle='#e8e8e8';ctx.fill();
+    ctx.fillStyle='#aaa';ctx.font='bold 15px Roboto,sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('Add entries →',cx,cy);return;
   }
   var arc=2*Math.PI/n;
+  // Draw segments
   for(var i=0;i<n;i++){
     var s=wheelAngle+i*arc,e=s+arc;
     ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,s,e);ctx.closePath();
     ctx.fillStyle=entries[i].color;ctx.fill();
-    ctx.strokeStyle='rgba(255,255,255,.6)';ctx.lineWidth=2;ctx.stroke();
-
-    // Vertical stacked text like wheelofnames
-    ctx.save();ctx.translate(cx,cy);ctx.rotate(s+arc/2);
-    var label=entries[i].label;if(label.length>18)label=label.slice(0,17)+'…';
-    var fs=Math.max(11,Math.min(20,sz/Math.max(n*1.6,5)));
+    ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=2;ctx.stroke();
+  }
+  // Draw labels
+  for(var i=0;i<n;i++){
+    var mid=wheelAngle+i*arc+arc/2;
+    ctx.save();
+    ctx.translate(cx,cy);
+    ctx.rotate(mid);
+    var label=entries[i].label;
+    if(label.length>22)label=label.slice(0,21)+'…';
+    var fs=Math.max(9,Math.min(20,sz/14)-Math.max(0,(n-6)*1.1));
     ctx.font='bold '+fs+'px Roboto,sans-serif';
-    ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.shadowColor='rgba(0,0,0,.5)';ctx.shadowBlur=3;
-    ctx.rotate(Math.PI/2);
-    var chars=label.split(''),lh=fs*1.2,th=chars.length*lh;
-    var tr=r*.6,sy=tr-th/2+lh/2;
-    chars.forEach(function(ch,ci){ctx.fillText(ch,0,-(tr-(sy+ci*lh)))});
+    ctx.fillStyle='#fff';
+    ctx.textAlign='left';
+    ctx.textBaseline='middle';
+    ctx.shadowColor='rgba(0,0,0,.6)';ctx.shadowBlur=3;ctx.shadowOffsetX=1;ctx.shadowOffsetY=1;
+    // Clip to segment
+    ctx.save();
+    ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,r-2,-arc/2,arc/2);ctx.closePath();ctx.clip();
+    ctx.fillText(label,r*0.13,0);
+    ctx.restore();
     ctx.restore();
   }
-  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='rgba(0,0,0,.12)';ctx.lineWidth=4;ctx.stroke();
+  // Outer border
+  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+  ctx.strokeStyle='rgba(0,0,0,.12)';ctx.lineWidth=5;ctx.stroke();
+  // Hub
   var hr=sz*.065;
   ctx.beginPath();ctx.arc(cx,cy,hr,0,Math.PI*2);
-  ctx.fillStyle='#fff';ctx.shadowColor='rgba(0,0,0,.2)';ctx.shadowBlur=8;ctx.fill();
+  ctx.fillStyle='#fff';ctx.shadowColor='rgba(0,0,0,.2)';ctx.shadowBlur=10;ctx.fill();
   ctx.shadowBlur=0;ctx.strokeStyle='rgba(0,0,0,.1)';ctx.lineWidth=2;ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,hr*.35,0,Math.PI*2);ctx.fillStyle='#ddd';ctx.fill();
 }
 
 function spinWheel(){
@@ -730,7 +565,7 @@ function spinWheel(){
   var current=(wheelAngle+winMid)%(Math.PI*2);
   var needed=(Math.PI*2-current)%(Math.PI*2);
   var totalRot=(5+Math.random()*4)*Math.PI*2+needed;
-  var t0=null,start=wheelAngle,dur=3200+Math.random()*1200;
+  var t0=null,start=wheelAngle,dur=3500+Math.random()*1000;
   function ease(t){return 1-Math.pow(1-t,4)}
   function frame(ts){
     if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1);
@@ -742,54 +577,35 @@ function spinWheel(){
     document.getElementById('spinSub').textContent='Click to spin again';
     spinResults.unshift(winner.label);
     document.getElementById('rBadge').textContent=spinResults.length;
-    renderResults();updateForceGrid();confetti(55);
-    playWinMusic('wheel');
-    spinning=false;
+    renderResults();updateForceGrid();confetti(55);playWinMusic('wheel');spinning=false;
   }
   requestAnimationFrame(frame);
 }
 
-function addEntry(){
-  var inp=document.getElementById('newEntry'),v=inp.value.trim();if(!v)return;
-  entries.push({label:v,color:WC[entries.length%WC.length]});
-  inp.value='';renderEntries();drawWheel();updateForceGrid();
-}
+function addEntry(){var inp=document.getElementById('newEntry'),v=inp.value.trim();if(!v)return;entries.push({label:v,color:WC[entries.length%WC.length]});inp.value='';renderEntries();drawWheel();updateForceGrid()}
 function removeEntry(i){entries.splice(i,1);if(forcedIdx>=entries.length)forcedIdx=-1;renderEntries();drawWheel();updateForceGrid()}
 function shuffleEntries(){for(var i=entries.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=entries[i];entries[i]=entries[j];entries[j]=t}renderEntries();drawWheel()}
 function sortEntries(){entries.sort(function(a,b){return a.label.localeCompare(b.label)});renderEntries();drawWheel()}
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function renderEntries(){
   var el=document.getElementById('entriesList');el.innerHTML='';
-  entries.forEach(function(e,i){
-    var r=document.createElement('div');r.className='erow';
-    r.innerHTML='<div class="edot" style="background:'+e.color+'"></div><span class="ename">'+e.label+'</span><button class="edel" onclick="removeEntry('+i+')">✕</button>';
-    el.appendChild(r);
-  });
+  entries.forEach(function(e,i){var r=document.createElement('div');r.className='erow';r.innerHTML='<div class="edot" style="background:'+e.color+'"></div><span class="ename">'+escHtml(e.label)+'</span><button class="edel" onclick="removeEntry('+i+')">✕</button>';el.appendChild(r)});
   document.getElementById('eBadge').textContent=entries.length;
 }
 function renderResults(){
   var el=document.getElementById('resultsList');
   if(!spinResults.length){el.innerHTML='<div style="color:#bbb;font-size:13px">No results yet.</div>';return}
-  el.innerHTML=spinResults.map(function(r,i){return'<div class="ritem">'+(i+1)+'. '+r+'</div>'}).join('');
+  el.innerHTML=spinResults.map(function(r,i){return'<div class="ritem">'+(i+1)+'. '+escHtml(r)+'</div>'}).join('');
 }
 function updateForceGrid(){
   var g=document.getElementById('forceGrid');if(!g)return;g.innerHTML='';
-  entries.forEach(function(e,i){
-    var b=document.createElement('button');b.className='force-btn'+(i===forcedIdx?' on':'');
-    b.textContent=e.label;
-    b.onclick=(function(idx){return function(){forcedIdx=forcedIdx===idx?-1:idx;updateForceGrid()}})(i);
-    g.appendChild(b);
-  });
+  entries.forEach(function(e,i){var b=document.createElement('button');b.className='force-btn'+(i===forcedIdx?' on':'');b.textContent=e.label;b.onclick=(function(idx){return function(){forcedIdx=forcedIdx===idx?-1:idx;updateForceGrid()}})(i);g.appendChild(b)});
 }
 function switchPTab(t){
-  ['entries','results'].forEach(function(x){
-    document.getElementById('ptab-'+x).classList.toggle('active',x===t);
-    document.getElementById('pv-'+x).style.display=x===t?(x==='entries'?'flex':'block'):'none';
-  });
+  ['entries','results'].forEach(function(x){document.getElementById('ptab-'+x).classList.toggle('active',x===t);document.getElementById('pv-'+x).style.display=x===t?(x==='entries'?'flex':'block'):'none'});
 }
 
-// ══════════════════════════════════════════════════════════
 // COIN
-// ══════════════════════════════════════════════════════════
 var coinPct=50,coinStats={h:0,t:0},coinFlipping=false;
 var COLORS=[
   {bg:'radial-gradient(circle at 38% 32%,#dcdcdc,#a0a0a0)',text:'#111'},
@@ -815,11 +631,7 @@ function buildSwatches(){
     });
   });
 }
-function applyColors(){
-  var hf=document.getElementById('headsface'),tf=document.getElementById('tailsface');
-  hf.style.background=COLORS[hColor].bg;hf.style.color=COLORS[hColor].text;
-  tf.style.background=COLORS[tColor].bg;tf.style.color=COLORS[tColor].text;
-}
+function applyColors(){var hf=document.getElementById('headsface'),tf=document.getElementById('tailsface');hf.style.background=COLORS[hColor].bg;hf.style.color=COLORS[hColor].text;tf.style.background=COLORS[tColor].bg;tf.style.color=COLORS[tColor].text}
 function doFlip(){
   if(coinFlipping)return;coinFlipping=true;
   var coin=document.getElementById('coin');coin.className='coin';void coin.offsetWidth;
@@ -838,36 +650,25 @@ function doFlip(){
 }
 function resetCoin(){coinStats={h:0,t:0};['hCount','tCount','coinTotal'].forEach(function(id){document.getElementById(id).textContent=0});document.getElementById('coinResult').textContent='—';document.getElementById('coin').className='coin'}
 
-// ══════════════════════════════════════════════════════════
 // DICE
-// ══════════════════════════════════════════════════════════
 var diceFaces=[4,6,8,10,12,20],diceTypeSides=6,diceCount=2,diceRolling=false,diceRollTotal=0,diceForcedValue=0;
 function diceEmoji(v){return v>=1&&v<=6&&diceTypeSides===6?['⚀','⚁','⚂','⚃','⚄','⚅'][v-1]:v}
 function buildDiceUI(){
   var area=document.getElementById('diceArea');area.innerHTML='';
-  for(var i=0;i<diceCount;i++){
-    var die=document.createElement('div');die.className='die';die.id='die-'+i;
-    die.style.fontSize=diceTypeSides===6?'2.4rem':'1.7rem';
-    die.textContent=diceTypeSides===6?'⚄':'?';die.onclick=rollDice;area.appendChild(die);
-  }
+  for(var i=0;i<diceCount;i++){var die=document.createElement('div');die.className='die';die.id='die-'+i;die.style.fontSize=diceTypeSides===6?'2.4rem':'1.7rem';die.textContent=diceTypeSides===6?'⚄':'?';die.onclick=rollDice;area.appendChild(die)}
   document.getElementById('diceCountLabel').textContent=diceCount+' '+(diceCount===1?'die':'dice');
-  var sl=document.getElementById('diceForceSlider');sl.max=diceTypeSides;if(+sl.value>diceTypeSides)sl.value=0;
-  updateDiceForce(sl.value);
+  var sl=document.getElementById('diceForceSlider');sl.max=diceTypeSides;if(+sl.value>diceTypeSides)sl.value=0;updateDiceForce(sl.value);
 }
 function buildDiceTypes(){
   var row=document.getElementById('diceTypeRow');row.innerHTML='';
-  diceFaces.forEach(function(s){
-    var b=document.createElement('button');b.className='dtype-btn'+(s===diceTypeSides?' active':'');
-    b.textContent='d'+s;b.onclick=(function(sides){return function(){diceTypeSides=sides;buildDiceTypes();buildDiceUI()}})(s);
-    row.appendChild(b);
-  });
+  diceFaces.forEach(function(s){var b=document.createElement('button');b.className='dtype-btn'+(s===diceTypeSides?' active':'');b.textContent='d'+s;b.onclick=(function(sides){return function(){diceTypeSides=sides;buildDiceTypes();buildDiceUI()}})(s);row.appendChild(b)});
 }
 function changeDiceCount(d){diceCount=Math.max(1,Math.min(6,diceCount+d));buildDiceUI()}
 function updateDiceForce(v){diceForcedValue=parseInt(v)||0;document.getElementById('diceForceVal').textContent=diceForcedValue===0?'Random':diceForcedValue}
 function rollDice(){
   if(diceRolling)return;diceRolling=true;
   var results=[];
-  for(var i=0;i<diceCount;i++){results.push(diceForcedValue>0&&diceForcedValue<=diceTypeSides?diceForcedValue:Math.floor(Math.random()*diceTypeSides)+1)}
+  for(var i=0;i<diceCount;i++)results.push(diceForcedValue>0&&diceForcedValue<=diceTypeSides?diceForcedValue:Math.floor(Math.random()*diceTypeSides)+1);
   var anim=setInterval(function(){for(var i=0;i<diceCount;i++){var d=document.getElementById('die-'+i);if(d)d.textContent=diceEmoji(Math.floor(Math.random()*diceTypeSides)+1)}},60);
   for(var i=0;i<diceCount;i++){var d=document.getElementById('die-'+i);if(d)d.classList.add('rolling')}
   setTimeout(function(){
@@ -882,15 +683,11 @@ function rollDice(){
 }
 function resetDice(){diceRollTotal=0;document.getElementById('diceTotal').textContent=0;document.getElementById('diceSum').textContent='—';document.getElementById('diceResult').textContent='—';for(var i=0;i<diceCount;i++){var d=document.getElementById('die-'+i);if(d)d.textContent=diceTypeSides===6?'⚄':'?'}}
 
-// ══════════════════════════════════════════════════════════
 // CONFETTI
-// ══════════════════════════════════════════════════════════
 var cc=['#e53935','#ffd600','#1e88e5','#43a047','#8e24aa','#fb8c00','#fff','#ff80ab','#00e5ff'];
 function confetti(n){for(var i=0;i<n;i++){var el=document.createElement('div');el.className='cp';el.style.left=Math.random()*100+'vw';el.style.background=cc[Math.floor(Math.random()*cc.length)];el.style.width=(6+Math.random()*9)+'px';el.style.height=(6+Math.random()*9)+'px';el.style.animationDuration=(1.1+Math.random()*2)+'s';el.style.animationDelay=(Math.random()*.5)+'s';el.style.borderRadius=Math.random()>.5?'50%':'2px';document.body.appendChild(el);setTimeout(function(){el.remove()},3600)}}
 
-// ══════════════════════════════════════════════════════════
 // INIT
-// ══════════════════════════════════════════════════════════
 buildSwatches();applyColors();
 buildDiceTypes();buildDiceUI();
 renderEntries();renderResults();
