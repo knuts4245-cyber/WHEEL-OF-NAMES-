@@ -3,790 +3,539 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>wheelofnames.com</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Bangers&display=swap" rel="stylesheet"/>
+<title>Wheel of Names</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Roboto',sans-serif;background:#f5f5f5;height:100vh;overflow:hidden;display:flex;flex-direction:column;color:#333;font-size:14px}
+html,body{height:100%;overflow:hidden;font-family:'Roboto',sans-serif;font-size:14px;color:#202124;background:#f8f9fa}
 
-/* TOP BAR */
-.topbar{height:48px;background:#fff;border-bottom:1px solid #e0e0e0;display:flex;align-items:center;padding:0 8px;gap:2px;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,.08);z-index:200}
-.brand{display:flex;align-items:center;gap:6px;margin-right:6px;text-decoration:none;color:#333;flex-shrink:0}
-.brand-name{font-size:15px;font-weight:500;color:#444;white-space:nowrap}
-.nav-sep{width:1px;height:20px;background:#e0e0e0;margin:0 2px;flex-shrink:0}
-.nav-item{display:flex;align-items:center;gap:4px;padding:5px 7px;border:none;background:transparent;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:500;color:#555;border-radius:4px;transition:background .12s;white-space:nowrap}
-.nav-item:hover{background:#f0f0f0}
-.nav-item svg{width:14px;height:14px;flex-shrink:0}
-.nav-spacer{flex:1}
-.lang-btn{display:flex;align-items:center;gap:3px;padding:5px 8px;border:none;background:transparent;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;color:#555;border-radius:4px}
-.lang-btn:hover{background:#f0f0f0}
+/* NAV */
+.topbar{height:56px;background:#fff;border-bottom:1px solid #dadce0;display:flex;align-items:center;padding:0 8px 0 14px;flex-shrink:0;position:relative;z-index:200}
+.logo-area{display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0;margin-right:auto;text-decoration:none}
+.logo-svg{width:32px;height:32px;flex-shrink:0}
+.logo-text{font-size:15px;font-weight:500;color:#202124;white-space:nowrap}
+.nav-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 10px;border:none;background:transparent;cursor:pointer;border-radius:6px;transition:background .15s;font-family:'Roboto',sans-serif;font-size:11px;color:#5f6368;white-space:nowrap;min-width:54px}
+.nav-btn:hover{background:#f1f3f4}
+.nav-btn svg{width:20px;height:20px;fill:#5f6368}
+.nav-sep{width:1px;height:28px;background:#dadce0;margin:0 2px;flex-shrink:0}
+.nav-icon{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border:none;background:transparent;cursor:pointer;border-radius:50%;transition:background .15s;flex-shrink:0}
+.nav-icon:hover{background:#f1f3f4}
+.nav-icon svg{width:22px;height:22px;fill:#5f6368}
+.nav-text{display:flex;align-items:center;gap:3px;padding:7px 10px;border:none;background:transparent;cursor:pointer;border-radius:6px;font-family:'Roboto',sans-serif;font-size:13px;color:#5f6368;white-space:nowrap;transition:background .15s}
+.nav-text:hover{background:#f1f3f4}
+.nav-text svg{width:16px;height:16px;fill:#5f6368}
 
-/* HAMBURGER MENU */
-.hamburger-wrap{position:relative}
-.hamburger-btn{display:flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid #ddd;background:#fff;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:500;color:#555;border-radius:4px;transition:all .12s}
-.hamburger-btn:hover{background:#f0f0f0}
-.hamburger-btn .hlines{display:flex;flex-direction:column;gap:3px;width:16px}
-.hamburger-btn .hlines span{display:block;height:2px;background:#555;border-radius:1px}
-.ham-dropdown{position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.15);z-index:999;min-width:160px;overflow:hidden;display:none}
-.ham-dropdown.open{display:block}
-.ham-item{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;font-size:14px;font-weight:500;color:#333;transition:background .1s}
-.ham-item:hover{background:#f5f5f5}
-.ham-item .ham-icon{font-size:18px;width:24px;text-align:center}
-.ham-sep{height:1px;background:#f0f0f0;margin:2px 0}
+/* LAYOUT */
+.main{display:flex;height:calc(100vh - 56px);overflow:hidden}
 
-/* MAIN */
-.main{flex:1;display:flex;overflow:hidden}
-.tab-view{display:none;flex:1;overflow:hidden}
-.tab-view.active{display:flex}
+/* STAGE */
+.stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(150deg,#fce4ec 0%,#f3e5f5 25%,#ede7f6 50%,#e8eaf6 75%,#e3f2fd 100%)}
 
-/* WHEEL TAB */
-.wheel-tab{flex:1;display:flex;overflow:hidden}
-.wheel-stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(ellipse at 35% 45%,#e4c4d8 0%,#cdb8d0 25%,#b8c6e2 60%,#a6bcd6 100%)}
-.edit-btn{position:absolute;top:10px;left:10px;width:34px;height:34px;border-radius:50%;background:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.2);z-index:10}
-.edit-btn svg{width:17px;height:17px;fill:#555}
-.ad-bar{position:absolute;top:54px;left:10px;font-size:11px;color:#888;display:flex;gap:12px;z-index:10}
+.edit-fab{position:absolute;top:14px;left:14px;width:42px;height:42px;border-radius:50%;background:#1a73e8;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(26,115,232,.4);z-index:10;transition:background .15s}
+.edit-fab:hover{background:#1557b0}
+.edit-fab svg{width:20px;height:20px;fill:#fff}
 
-/* Wheel wrapper: pointer sits at TOP (12 o'clock) */
-.wheel-wrap{position:relative;display:flex;align-items:center;justify-content:center}
-#wheelCanvas{cursor:pointer;border-radius:50%;display:block;box-shadow:0 6px 36px rgba(0,0,0,.28),0 2px 8px rgba(0,0,0,.15)}
+/* WHEEL */
+.wheel-wrap{position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none}
+#wheelCanvas{display:block;filter:drop-shadow(0 4px 24px rgba(0,0,0,.2)) drop-shadow(0 12px 48px rgba(0,0,0,.12))}
 
-/* Pointer anchored to top-center of the wheel wrap */
-.pointer-wrap{
-  position:absolute;
-  top:0;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:10;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  pointer-events:none;
-}
+/* Click to spin overlay */
+.spin-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;z-index:6;transition:opacity .3s}
+.spin-overlay.hidden{opacity:0}
+.spin-line1{font-family:'Patrick Hand',cursive;font-size:clamp(20px,3.2vw,40px);font-style:italic;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.6),0 0 30px rgba(0,0,0,.25);line-height:1.1;white-space:nowrap}
+.spin-line2{font-family:'Roboto',sans-serif;font-size:clamp(10px,1.2vw,14px);font-style:italic;color:rgba(255,255,255,.85);text-shadow:0 1px 6px rgba(0,0,0,.5);margin-top:5px;white-space:nowrap}
 
-.spin-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;z-index:5;border-radius:50%;overflow:hidden}
-.spin-main{font-size:clamp(16px,3vw,30px);font-weight:700;color:#fff;text-shadow:1px 2px 8px rgba(0,0,0,.7);text-align:center;padding:0 8%}
-.spin-sub{font-size:clamp(10px,1.4vw,15px);color:rgba(255,255,255,.9);text-shadow:1px 1px 5px rgba(0,0,0,.6);margin-top:4px}
-.footer-bar{position:absolute;bottom:6px;left:8px;font-size:10px;color:#999;z-index:10}
-.float-btns{position:absolute;bottom:14px;left:14px;display:flex;flex-direction:column;gap:7px;z-index:20}
-.fbtn{background:#fff;border:1px solid #ccc;border-radius:20px;padding:6px 13px;font-size:12px;font-weight:600;cursor:pointer;box-shadow:0 1px 5px rgba(0,0,0,.12);color:#444;font-family:'Roboto',sans-serif;transition:all .12s;display:flex;align-items:center;gap:5px}
-.fbtn:hover{background:#f5f5f5}
-.fbtn.active-btn{background:linear-gradient(135deg,#43a047,#1b5e20);color:#fff;border-color:transparent}
-.float-panel{position:absolute;bottom:100px;left:14px;background:#fff;border:1px solid #ddd;border-radius:10px;padding:14px 16px;width:260px;box-shadow:0 4px 20px rgba(0,0,0,.18);z-index:30;display:none}
-.float-panel.open{display:block}
-.fp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.fp-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#666}
-.fp-x{background:none;border:none;cursor:pointer;color:#bbb;font-size:15px;line-height:1;padding:0}
-.fp-x:hover{color:#555}
-.force-grid{display:flex;flex-wrap:wrap;gap:5px}
-.force-btn{padding:4px 10px;border-radius:20px;border:1px solid #ccc;background:#fff;color:#444;font-size:12px;cursor:pointer;font-family:'Roboto',sans-serif;transition:all .1s}
-.force-btn.on{background:#e53935;border-color:#e53935;color:#fff}
-.music-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#888;margin:10px 0 4px}
-.music-input{width:100%;padding:7px 10px;border:1px solid #ccc;border-radius:6px;font-family:'Roboto',sans-serif;font-size:13px;outline:none;transition:border-color .12s;margin-bottom:6px}
-.music-input:focus{border-color:#1e88e5}
-.music-input::placeholder{color:#ccc}
-.music-save{background:#1e88e5;color:#fff;border:none;border-radius:6px;padding:8px 12px;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:600}
-.music-toggle-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.music-toggle-label{font-size:13px;color:#555;font-weight:500}
-.tog{width:40px;height:22px;background:#ccc;border-radius:11px;position:relative;cursor:pointer;transition:background .2s;border:none;flex-shrink:0}
-.tog.on{background:#43a047}
-.tog::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
-.tog.on::after{left:21px}
-.music-status{font-size:11px;color:#43a047;margin-top:5px;min-height:14px}
+/* Pointer */
+.ptr-outer{position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:20;pointer-events:none;filter:drop-shadow(-2px 1px 4px rgba(0,0,0,.4))}
 
 /* RIGHT PANEL */
-.right-panel{width:320px;flex-shrink:0;background:#fff;border-left:1px solid #e0e0e0;display:flex;flex-direction:column;overflow:hidden}
-.panel-tabs-row{display:flex;border-bottom:1px solid #e0e0e0;flex-shrink:0;position:relative}
-.tab-arrow{position:absolute;left:0;top:0;bottom:0;width:28px;background:#ff6d00;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;transition:background .12s}
-.tab-arrow:hover{background:#e65100}
-.tab-arrow svg{width:13px;height:13px;fill:#fff}
-.ptab{flex:1;padding:10px 5px;display:flex;align-items:center;justify-content:center;gap:5px;font-size:13px;font-weight:500;color:#999;cursor:pointer;border-bottom:2px solid transparent;user-select:none;transition:all .12s}
-.ptab:first-of-type{margin-left:28px}
-.ptab.active{color:#222;border-bottom-color:#222}
-.badge{background:#999;color:#fff;border-radius:10px;padding:0 6px;font-size:11px;font-weight:700;min-width:18px;text-align:center}
-.ptab.active .badge{background:#222}
-.panel-actions{display:flex;align-items:center;gap:5px;padding:8px 10px;border-bottom:1px solid #e0e0e0;flex-shrink:0;flex-wrap:wrap}
-.abtn{display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:4px;background:#1a73e8;color:#fff;border:none;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:500;transition:background .12s;white-space:nowrap}
-.abtn:hover{background:#1558b8}
-.abtn svg{width:13px;height:13px;fill:#fff;flex-shrink:0}
-.abtn.out{background:#fff;color:#444;border:1px solid #ccc}
-.abtn.out:hover{background:#f5f5f5}
-.abtn.out svg{fill:#444}
-.adv{display:flex;align-items:center;gap:4px;font-size:12px;color:#666;cursor:pointer;margin-left:auto;white-space:nowrap}
-.entries-scroll{flex:1;overflow-y:auto}
-.erow{display:flex;align-items:center;padding:7px 12px;border-bottom:1px solid #f2f2f2;transition:background .1s;cursor:default}
-.erow:hover{background:#fafafa}
-.edot{width:10px;height:10px;border-radius:2px;margin-right:10px;flex-shrink:0}
-.ename{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
-.edel{background:none;border:none;color:transparent;cursor:pointer;font-size:15px;padding:0 3px;line-height:1}
-.erow:hover .edel{color:#ddd}
-.edel:hover{color:#e53935!important}
-.add-row{padding:10px 12px;border-top:1px solid #e0e0e0;flex-shrink:0;display:flex;gap:7px}
-.ainput{flex:1;padding:8px 10px;border:1px solid #ccc;border-radius:4px;font-family:'Roboto',sans-serif;font-size:14px;outline:none;transition:border-color .12s}
-.ainput:focus{border-color:#1a73e8}
-.ainput::placeholder{color:#ccc}
-.add-plus{background:#1a73e8;color:#fff;border:none;border-radius:4px;padding:8px 13px;cursor:pointer;font-size:18px;font-weight:700;line-height:1;transition:background .12s}
-.add-plus:hover{background:#1558b8}
-.panel-foot{padding:9px 12px;border-top:1px solid #e0e0e0;flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
-.aw-wrap{display:flex}
-.aw-btn{display:flex;align-items:center;gap:4px;background:#1a73e8;color:#fff;border:none;border-radius:4px 0 0 4px;padding:7px 10px;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:500}
-.aw-btn svg{width:12px;height:12px;fill:#fff}
-.beta{background:#fbbc04;color:#333;font-size:10px;font-weight:700;border-radius:3px;padding:1px 5px;margin-right:3px}
-.aw-dd{background:#1a73e8;color:#fff;border:none;border-radius:0 4px 4px 0;border-left:1px solid rgba(255,255,255,.3);padding:7px 7px;cursor:pointer;font-size:12px}
-.ver{font-size:11px;color:#ccc}
-.results-view{flex:1;overflow-y:auto;padding:10px 14px}
-.ritem{padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:#444}
+.panel{width:366px;flex-shrink:0;background:#fff;border-left:1px solid #dadce0;display:flex;flex-direction:column;overflow:hidden}
 
-/* COIN TAB */
-.coin-tab{flex:1;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);position:relative;overflow:hidden}
-.coin-stage{display:flex;flex-direction:column;align-items:center;gap:20px;z-index:1}
-.coin-outer{width:min(50vw,300px);height:min(50vw,300px);perspective:900px;cursor:pointer;flex-shrink:0}
-.coin{width:100%;height:100%;position:relative;transform-style:preserve-3d;border-radius:50%}
-.coin-face{position:absolute;inset:0;border-radius:50%;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;font-family:'Bangers',cursive;font-size:clamp(1.4rem,4vw,2rem);letter-spacing:3px;box-shadow:inset 0 0 0 10px rgba(0,0,0,.15),0 8px 40px rgba(0,0,0,.4)}
-.coin-face .ci{font-size:clamp(2.5rem,6vw,3.5rem);line-height:1}
-.coin-face.back{transform:rotateY(180deg)}
-.coin.tails{transform:rotateY(180deg)}
-@keyframes flipH{0%{transform:rotateY(0)}100%{transform:rotateY(720deg)}}
-@keyframes flipT{0%{transform:rotateY(0)}100%{transform:rotateY(900deg)}}
-.coin.anim-h{animation:flipH .75s ease forwards}
-.coin.anim-t{animation:flipT .75s ease forwards}
-.coin-result{font-family:'Bangers',cursive;font-size:clamp(1.8rem,4vw,2.5rem);letter-spacing:4px;color:#fff;min-height:3rem;display:flex;align-items:center;text-shadow:0 0 30px rgba(255,209,102,.6)}
-.coin-flip-btn{background:linear-gradient(135deg,#ff6b35,#e8522a);color:#fff;border:none;border-radius:12px;padding:12px 40px;font-family:'Bangers',cursive;font-size:1.4rem;letter-spacing:2px;cursor:pointer;box-shadow:0 4px 20px rgba(255,107,53,.45);transition:transform .15s}
-.coin-flip-btn:hover{transform:translateY(-2px)}
-.coin-stats{display:flex;gap:20px;font-size:.85rem;color:rgba(255,255,255,.6);font-weight:600}
-.coin-stats b{color:#fff}
-.reset-btn{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);border-radius:6px;padding:4px 10px;font-size:.74rem;font-weight:600;cursor:pointer;font-family:'Roboto',sans-serif;transition:all .12s}
-.reset-btn:hover{background:rgba(255,255,255,.1);color:#fff}
-.coin-right{width:240px;flex-shrink:0;background:rgba(255,255,255,.06);border-left:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;overflow-y:auto}
-.cr-section{padding:14px}
-.cr-title{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.4);margin-bottom:8px}
-.swatches-h{display:flex;flex-wrap:wrap;gap:6px}
-.swatch{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:transform .1s}
-.swatch:hover{transform:scale(1.18)}
-.swatch.active{border-color:#fff!important}
-.cr-acc-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:12px 14px;transition:background .12s;border-top:1px solid rgba(255,255,255,.07)}
-.cr-acc-header:hover{background:rgba(255,255,255,.05)}
-.cr-acc-left{display:flex;align-items:center;gap:7px;font-size:.83rem;font-weight:600;color:rgba(255,255,255,.8)}
-.cr-pill{background:rgba(255,80,80,.2);color:#ff7070;border-radius:20px;padding:1px 8px;font-size:.7rem;font-weight:800}
-.cr-pill.on{background:rgba(100,220,150,.2);color:#80d8a0}
-.cr-acc-body{display:none;padding:0 14px 12px}
-.cr-acc-body.open{display:block}
-.pct-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;margin-top:8px}
-.pct-label{font-size:.8rem;color:rgba(255,255,255,.5)}
-.pct-val{font-size:.85rem;font-weight:800;color:#ffd166}
-.shints{display:flex;justify-content:space-between;font-size:.68rem;color:rgba(255,255,255,.3)}
-input[type=range]{width:100%;accent-color:#e53935;cursor:pointer;height:4px;margin:4px 0}
-.music-inp-dark{width:100%;padding:7px 10px;border:1px solid rgba(255,255,255,.15);border-radius:6px;font-family:'Roboto',sans-serif;font-size:12px;outline:none;background:rgba(255,255,255,.08);color:#fff;margin-bottom:5px}
-.music-inp-dark::placeholder{color:rgba(255,255,255,.3)}
-.music-row-dark{display:flex;gap:5px;margin-bottom:5px}
-.music-inp-sm{flex:1;padding:6px 8px;border:1px solid rgba(255,255,255,.15);border-radius:6px;font-family:'Roboto',sans-serif;font-size:11px;outline:none;background:rgba(255,255,255,.08);color:#fff;min-width:0}
-.music-save-dark{background:#8a4fff;color:#fff;border:none;border-radius:6px;padding:6px 10px;cursor:pointer;font-size:12px;font-weight:700}
-.music-tog-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.music-tog-label{font-size:.8rem;color:rgba(255,255,255,.6)}
-.tog-dark{width:38px;height:20px;background:rgba(255,255,255,.15);border-radius:10px;position:relative;cursor:pointer;transition:background .2s;border:none;flex-shrink:0}
-.tog-dark.on{background:#43a047}
-.tog-dark::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;background:#fff;border-radius:50%;transition:left .2s}
-.tog-dark.on::after{left:20px}
-.music-status-dark{font-size:.72rem;color:#80d8a0;min-height:14px}
+/* Tab bar */
+.tab-bar{display:flex;align-items:stretch;border-bottom:1px solid #dadce0;flex-shrink:0;height:48px}
+.spin-tab-btn{width:48px;background:#1a73e8;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-right:1px solid rgba(255,255,255,.12);transition:background .15s}
+.spin-tab-btn:hover{background:#1557b0}
+.spin-tab-btn:active{background:#0d47a1}
+.spin-tab-btn svg{width:26px;height:26px;fill:#fff}
+.tab{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;font-weight:500;color:#5f6368;cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;padding:0 8px;user-select:none}
+.tab.active{color:#1a73e8;border-bottom-color:#1a73e8}
+.tab-n{background:#e8f0fe;color:#1a73e8;border-radius:10px;padding:1px 7px;font-size:11px;font-weight:700}
+.tab.active .tab-n{background:#1a73e8;color:#fff}
 
-/* DICE TAB */
-.dice-tab{flex:1;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0d0221 0%,#11052c 40%,#190a3a 100%);position:relative;overflow:hidden}
-.dice-stage{display:flex;flex-direction:column;align-items:center;gap:16px;z-index:1;padding:20px}
-.dice-type-row{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
-.dtype-btn{padding:5px 14px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-size:.82rem;font-weight:700;cursor:pointer;font-family:'Roboto',sans-serif;transition:all .12s}
-.dtype-btn.active{background:linear-gradient(135deg,#ff6b35,#e8522a);border-color:transparent;color:#fff}
-.dice-count-row{display:flex;align-items:center;gap:12px;font-size:.9rem;font-weight:700;color:rgba(255,255,255,.6)}
-.count-btn{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .12s}
-.count-btn:hover{background:rgba(255,255,255,.15)}
-.dice-area{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
-.die{width:88px;height:88px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);transition:box-shadow .15s,transform .1s;user-select:none;color:#fff}
-.die:hover{box-shadow:0 6px 28px rgba(255,107,53,.3);transform:translateY(-2px)}
-@keyframes diceShake{0%{transform:rotate(0) scale(1)}20%{transform:rotate(-12deg) scale(1.08)}40%{transform:rotate(10deg) scale(1.08)}60%{transform:rotate(-8deg) scale(1.05)}80%{transform:rotate(6deg) scale(1.05)}100%{transform:rotate(0) scale(1)}}
-.die.rolling{animation:diceShake .5s ease forwards}
-.dice-result{font-family:'Bangers',cursive;font-size:2rem;letter-spacing:3px;color:#fff;min-height:3rem;display:flex;align-items:center;text-shadow:0 0 20px rgba(255,107,53,.5)}
-.dice-roll-btn{background:linear-gradient(135deg,#ff6b35,#e8522a);color:#fff;border:none;border-radius:12px;padding:12px 40px;font-family:'Bangers',cursive;font-size:1.4rem;letter-spacing:2px;cursor:pointer;box-shadow:0 4px 20px rgba(255,107,53,.45);transition:transform .15s}
-.dice-roll-btn:hover{transform:translateY(-2px)}
-.dice-stats{display:flex;gap:20px;font-size:.85rem;color:rgba(255,255,255,.5);font-weight:600}
-.dice-stats b{color:#fff}
-.dice-right{width:240px;flex-shrink:0;background:rgba(255,255,255,.04);border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;overflow-y:auto}
+/* Toolbar */
+.toolbar{display:flex;align-items:center;gap:4px;padding:7px 8px;border-bottom:1px solid #dadce0;flex-shrink:0}
+.tb{display:flex;align-items:center;gap:5px;padding:7px 13px;border-radius:4px;background:#1a73e8;color:#fff;border:none;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:500;transition:background .15s;white-space:nowrap}
+.tb:hover{background:#1557b0}
+.tb svg{width:15px;height:15px;flex-shrink:0;fill:#fff}
+.tb.outline{background:transparent;color:#3c4043;border:1px solid #dadce0}
+.tb.outline:hover{background:#f1f3f4}
+.tb.outline svg{fill:#3c4043}
+.adv-lbl{margin-left:auto;display:flex;align-items:center;gap:5px;font-size:12px;color:#5f6368;cursor:pointer;white-space:nowrap;flex-shrink:0}
 
-/* CONFETTI */
-@keyframes cf{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
-.cp{position:fixed;width:9px;height:9px;top:-10px;pointer-events:none;z-index:9999;border-radius:2px;animation:cf linear forwards}
-#yt-player{position:fixed;bottom:-9999px;left:-9999px;width:2px;height:2px;opacity:0;pointer-events:none}
+/* Textarea */
+.ta-wrap{flex:1;overflow:hidden;display:flex;flex-direction:column}
+.ta{flex:1;width:100%;border:none;outline:none;resize:none;font-family:'Roboto',sans-serif;font-size:14px;color:#202124;padding:10px 14px;line-height:2.1;background:#fff}
+.ta::placeholder{color:#bdc1c6}
+
+/* Results */
+.res-wrap{flex:1;overflow-y:auto;display:block}
+.r-row{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid #f1f3f4;font-size:14px;color:#3c4043}
+.r-num{color:#9aa0a6;font-size:12px;min-width:20px;text-align:right;flex-shrink:0}
+.r-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* Footer */
+.panel-foot{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-top:1px solid #dadce0;flex-shrink:0}
+.add-grp{display:flex}
+.add-main{display:flex;align-items:center;gap:6px;background:#1a73e8;color:#fff;border:none;border-radius:4px 0 0 4px;padding:8px 14px;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:500}
+.add-arr{background:#1a73e8;color:#fff;border:none;border-left:1px solid rgba(255,255,255,.25);border-radius:0 4px 4px 0;padding:8px 10px;cursor:pointer;font-size:13px}
+.beta{background:#f9ab00;color:#202124;font-size:10px;font-weight:700;border-radius:3px;padding:1px 5px}
+.ver{font-size:11px;color:#9aa0a6}.ver a{color:#1a73e8;text-decoration:none}
+
+/* WINNER MODAL */
+.modal-bg{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.5)}
+.modal-bg.open{display:flex}
+.w-card{background:#fff;border-radius:16px;width:min(480px,94vw);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.4);animation:pop .26s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.w-rainbow{height:10px;background:linear-gradient(90deg,#ea4335 0 14.3%,#fa7b17 14.3% 28.6%,#fbbc04 28.6% 42.9%,#34a853 42.9% 57.1%,#4285f4 57.1% 71.4%,#a142f4 71.4% 85.7%,#ea4335 85.7% 100%)}
+.w-head{background:#4285f4;padding:18px 28px;display:flex;align-items:center;justify-content:center;gap:12px}
+.w-head-txt{font-size:20px;font-weight:700;color:#fff}
+.w-body{padding:32px 36px 28px;text-align:center}
+.w-name{font-size:clamp(26px,6vw,50px);font-weight:700;margin-bottom:28px;line-height:1.2;word-break:break-word}
+.w-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.wbtn{flex:1;min-width:110px;max-width:175px;padding:13px 14px;border-radius:6px;border:none;cursor:pointer;font-family:'Roboto',sans-serif;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .14s}
+.wbtn-x{background:#f1f3f4;color:#3c4043}.wbtn-x:hover{background:#e8eaed}
+.wbtn-rm{background:#ea4335;color:#fff}.wbtn-rm:hover{background:#c5221f}
+.wbtn-rma{background:#4285f4;color:#fff}.wbtn-rma:hover{background:#1a73e8}
+
+/* Confetti */
+@keyframes fall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.cp{position:fixed;top:-14px;pointer-events:none;z-index:9999;animation:fall linear forwards}
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
+<!-- NAV -->
 <div class="topbar">
-  <div class="brand">
-    <svg width="32" height="32" viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
-      <path d="M17 17 L17 1 A16 16 0 0 1 33 17 Z" fill="#e53935"/>
-      <path d="M17 17 L33 17 A16 16 0 0 1 17 33 Z" fill="#fb8c00"/>
-      <path d="M17 17 L17 33 A16 16 0 0 1 1 17 Z" fill="#43a047"/>
-      <path d="M17 17 L1 17 A16 16 0 0 1 17 1 Z" fill="#1e88e5"/>
-      <line x1="17" y1="1" x2="17" y2="33" stroke="#fff" stroke-width="1.5"/>
-      <line x1="1" y1="17" x2="33" y2="17" stroke="#fff" stroke-width="1.5"/>
-      <circle cx="17" cy="17" r="4" fill="#fff"/>
-      <circle cx="17" cy="17" r="2" fill="#e0e0e0"/>
+  <a class="logo-area" href="#">
+    <svg class="logo-svg" viewBox="0 0 36 36">
+      <path d="M18 18L18 2A16 16 0 0134 18Z" fill="#ea4335"/>
+      <path d="M18 18L34 18A16 16 0 0118 34Z" fill="#fbbc04"/>
+      <path d="M18 18L18 34A16 16 0 012 18Z" fill="#34a853"/>
+      <path d="M18 18L2 18A16 16 0 0118 2Z" fill="#4285f4"/>
+      <circle cx="18" cy="18" r="5.5" fill="#fff"/>
     </svg>
-    <span class="brand-name">wheelofnames.com</span>
-  </div>
-
+    <span class="logo-text">wheelofnames.com</span>
+  </a>
+  <button class="nav-btn"><svg viewBox="0 0 24 24"><path d="M12 15.5A3.5 3.5 0 018.5 12 3.5 3.5 0 0112 8.5a3.5 3.5 0 013.5 3.5 3.5 3.5 0 01-3.5 3.5m7.43-2.92c.04-.33.07-.66.07-1s-.03-.68-.07-1l2.16-1.68c.19-.15.24-.42.12-.64l-2.04-3.54c-.12-.22-.39-.3-.61-.22l-2.55 1.03c-.53-.4-1.1-.73-1.72-.99l-.38-2.71C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.71c-.62.26-1.19.59-1.72.99L4.86 5.09c-.22-.08-.49 0-.61.22L2.21 8.85c-.13.22-.07.49.12.64l2.15 1.68c-.04.33-.07.67-.07 1s.03.67.07 1l-2.15 1.68c-.19.15-.24.42-.12.64l2.04 3.54c.12.22.39.3.61.22l2.55-1.03c.53.4 1.1.73 1.72.99l.38 2.71c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.71c.62-.26 1.19-.59 1.72-.99l2.55 1.03c.22.08.49 0 .61-.22l2.04-3.54c.12-.22.07-.49-.12-.64l-2.16-1.68z"/></svg>Customize</button>
+  <button class="nav-btn"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>New</button>
+  <button class="nav-btn"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.35C18 2.99 16.21 1.5 14 1.5c-1.3 0-2.4.65-3.14 1.62L10 4l-.86-1c-.74-.97-1.84-1.5-3.14-1.5-2.21 0-4 1.49-4 3.65 0 .47.11.91.18 1.35H2c-.55 0-1 .45-1 1v11c0 .55.45 1 1 1h18c.55 0 1-.45 1-1V7c0-.55-.45-1-1-1zm-2 11H6V8h12v9z"/></svg>Open</button>
+  <button class="nav-btn"><svg viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>Save</button>
+  <button class="nav-btn"><svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11A2.99 2.99 0 0021 5a3 3 0 10-3 3c.76 0 1.44-.3 1.96-.77l-7.05 4.11c-.05.23-.09.46-.09.7s.04.47.09.7L19.96 17c-.52.47-1.2.77-1.96.77a3 3 0 103 3 3 3 0 00-3-3.69z"/></svg>Share</button>
+  <button class="nav-btn"><svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg>Gallery</button>
   <div class="nav-sep"></div>
-
-  <div class="hamburger-wrap" id="hamWrap">
-    <button class="hamburger-btn" onclick="toggleHamMenu()">
-      <div class="hlines"><span></span><span></span><span></span></div>
-      Apps
-    </button>
-    <div class="ham-dropdown" id="hamMenu">
-      <div class="ham-item" onclick="switchApp('wheel');toggleHamMenu()"><span class="ham-icon">🎡</span> Wheel</div>
-      <div class="ham-sep"></div>
-      <div class="ham-item" onclick="switchApp('coin');toggleHamMenu()"><span class="ham-icon">🪙</span> Coin Flip</div>
-      <div class="ham-sep"></div>
-      <div class="ham-item" onclick="switchApp('dice');toggleHamMenu()"><span class="ham-icon">🎲</span> Dice Roller</div>
-    </div>
-  </div>
-
+  <button class="nav-icon" title="Fullscreen"><svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg></button>
+  <button class="nav-text">More<svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
   <div class="nav-sep"></div>
-  <button class="nav-item">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-    Customize
-  </button>
-  <button class="nav-item">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-    New
-  </button>
-  <button class="nav-item">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-    Open
-  </button>
-  <button class="nav-item">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-    Save
-  </button>
-  <button class="nav-item">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-    Share
-  </button>
-  <button class="nav-item">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-    Gallery
-  </button>
-  <button class="nav-item">More ▾</button>
-  <div class="nav-spacer"></div>
-  <button class="lang-btn">🌐 English ▾</button>
+  <button class="nav-text"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#5f6368"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95a15.65 15.65 0 00-1.38-3.56A8.03 8.03 0 0118.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.987 7.987 0 015.08 16zm2.95-8H5.08a7.987 7.987 0 014.33-3.56A15.65 15.65 0 008.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2zm.25 5.56c-.6-1.11-1.06-2.31-1.38-3.56h2.95a8.03 8.03 0 01-4.33 3.56zM15.97 8c-.32-1.25-.78-2.45-1.38-3.56A8.03 8.03 0 0118.92 8h-2.95z"/></svg>English<svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
 </div>
 
-<!-- MAIN -->
 <div class="main">
+  <!-- STAGE -->
+  <div class="stage" id="stage">
+    <button class="edit-fab"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zm17.71-10.46a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
 
-  <!-- WHEEL TAB -->
-  <div class="tab-view active" id="tv-wheel">
-    <div class="wheel-tab">
-      <div class="wheel-stage" id="wheelStage">
-        <button class="edit-btn"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
-        <div class="ad-bar"><span>Report bad ad 🚩</span><span>Close ads ✕</span></div>
+    <div class="wheel-wrap" id="wheelWrap" onclick="spinWheel()">
+      <canvas id="wheelCanvas"></canvas>
 
-        <div class="wheel-wrap" id="wheelWrap">
-          <canvas id="wheelCanvas" onclick="spinWheel()"></canvas>
-
-          <!-- Pointer at TOP (12 o'clock) -->
-          <div class="pointer-wrap" id="pointerWrap">
-            <svg id="pointerSvg" viewBox="0 0 40 52" xmlns="http://www.w3.org/2000/svg" style="display:block">
-              <defs>
-                <linearGradient id="pg" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#42a5f5"/>
-                  <stop offset="1" stop-color="#1565c0"/>
-                </linearGradient>
-              </defs>
-              <!-- Triangle pointing DOWN into the wheel -->
-              <polygon points="20,48 2,6 38,6" fill="url(#pg)" stroke="#0d47a1" stroke-width="1.5" stroke-linejoin="round"/>
-            </svg>
-          </div>
-
-          <div class="spin-overlay" id="spinOverlay" style="pointer-events:none">
-            <div class="spin-main" id="spinMain" style="opacity:0.85">Click to spin</div>
-            <div class="spin-sub" id="spinSub" style="opacity:0.7">or press ctrl+enter</div>
-          </div>
-        </div>
-
-        <div class="footer-bar">Do Not Sell or Share My Personal Information</div>
-        <div class="float-btns">
-          <button class="fbtn" id="cheatBtn" onclick="togglePanel('cheat')">⚡ Cheat Mode</button>
-          <button class="fbtn" id="wmusicBtn" onclick="togglePanel('wmusic')">🎵 Win Music</button>
-        </div>
-        <div class="float-panel" id="cheatPanel">
-          <div class="fp-head"><span class="fp-title">⚡ Force Result</span><button class="fp-x" onclick="togglePanel('cheat')">✕</button></div>
-          <div style="font-size:11px;color:#888;margin-bottom:8px">Wheel physically lands on chosen entry</div>
-          <div class="force-grid" id="forceGrid"></div>
-          <div style="font-size:10px;color:#bbb;margin-top:8px">Tap to force, tap again to clear</div>
-        </div>
-        <div class="float-panel" id="wmusicPanel" style="bottom:130px">
-          <div class="fp-head"><span class="fp-title">🎵 Win Music</span><button class="fp-x" onclick="togglePanel('wmusic')">✕</button></div>
-          <div class="music-toggle-row"><span class="music-toggle-label">Enable win music</span><button class="tog" id="wmusicTog" onclick="toggleMusicEnabled('wheel')"></button></div>
-          <div class="music-label">YouTube link</div>
-          <input class="music-input" id="wheelYtUrl" placeholder="https://youtube.com/watch?v=…"/>
-          <div style="display:flex;gap:6px">
-            <div style="flex:1"><div class="music-label">Start (sec)</div><input class="music-input" id="wheelYtStart" type="number" min="0" value="0" style="margin-bottom:0"/></div>
-            <div style="flex:1"><div class="music-label">Duration (sec)</div><input class="music-input" id="wheelYtDur" type="number" min="1" value="10" style="margin-bottom:0"/></div>
-          </div>
-          <div style="margin-top:8px;text-align:right"><button class="music-save" onclick="saveMusic('wheel')">💾 Save</button></div>
-          <div class="music-status" id="wheelMusicStatus"></div>
-        </div>
+      <div class="spin-overlay" id="spinOverlay">
+        <div class="spin-line1">Click to spin</div>
+        <div class="spin-line2">or press ctrl+enter</div>
       </div>
 
-      <!-- Right panel -->
-      <div class="right-panel">
-        <div class="panel-tabs-row">
-          <div class="tab-arrow" onclick="spinWheel()"><svg viewBox="0 0 24 24"><path d="M8 5l8 7-8 7V5z"/></svg></div>
-          <div class="ptab active" id="ptab-entries" onclick="switchPTab('entries')">Entries <span class="badge" id="eBadge">0</span></div>
-          <div class="ptab" id="ptab-results" onclick="switchPTab('results')">Results <span class="badge" id="rBadge">0</span></div>
-        </div>
-        <div id="pv-entries" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
-          <div class="panel-actions">
-            <button class="abtn" onclick="shuffleEntries()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>Shuffle
-            </button>
-            <button class="abtn" onclick="sortEntries()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg>Sort
-            </button>
-            <button class="abtn out">
-              <svg viewBox="0 0 24 24" width="13" height="13"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="#444" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="#444"/><polyline points="21 15 16 10 5 21" fill="none" stroke="#444" stroke-width="2"/></svg>Add image ▾
-            </button>
-            <label class="adv"><input type="checkbox"/> Advanced</label>
-          </div>
-          <div class="entries-scroll" id="entriesList"></div>
-          <div class="add-row">
-            <input class="ainput" id="newEntry" placeholder="Add entry…" maxlength="40" onkeydown="if(event.key==='Enter')addEntry()"/>
-            <button class="add-plus" onclick="addEntry()">+</button>
-          </div>
-        </div>
-        <div id="pv-results" style="display:none;flex:1;overflow:hidden">
-          <div class="results-view" id="resultsList"><div style="color:#bbb;font-size:13px">No results yet.</div></div>
-        </div>
-        <div class="panel-foot">
-          <div class="aw-wrap">
-            <button class="aw-btn"><span class="beta">Beta</span><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add wheel</button>
-            <button class="aw-dd">▾</button>
-          </div>
-          <span class="ver">Version 405</span>
-        </div>
+      <!-- Pointer SVG — positioned by JS -->
+      <div class="ptr-outer" id="ptrOuter">
+        <svg id="ptrSvg" viewBox="0 0 54 40" xmlns="http://www.w3.org/2000/svg">
+          <defs><filter id="pf"><feDropShadow dx="-2" dy="1" stdDeviation="2.5" flood-color="rgba(0,0,0,.45)"/></filter></defs>
+          <polygon points="2,20 52,3 52,37" fill="#1a73e8" filter="url(#pf)"/>
+        </svg>
       </div>
     </div>
+
+    <div style="position:absolute;bottom:7px;left:10px;font-size:10px;color:#9aa0a6;pointer-events:none">Do Not Sell or Share My Personal Information</div>
   </div>
 
-  <!-- COIN TAB -->
-  <div class="tab-view" id="tv-coin">
-    <div class="coin-tab">
-      <div class="coin-stage">
-        <div class="coin-outer" onclick="doFlip()">
-          <div class="coin" id="coin">
-            <div class="coin-face front" id="headsface"><div class="ci">🌟</div>HEADS</div>
-            <div class="coin-face back" id="tailsface"><div class="ci">🌙</div>TAILS</div>
-          </div>
-        </div>
-        <div class="coin-result" id="coinResult">—</div>
-        <button class="coin-flip-btn" onclick="doFlip()">🪙 FLIP IT!</button>
-        <div class="coin-stats">
-          <span>Heads: <b id="hCount">0</b></span>
-          <span>Tails: <b id="tCount">0</b></span>
-          <span>Total: <b id="coinTotal">0</b></span>
-          <button class="reset-btn" onclick="resetCoin()">Reset</button>
-        </div>
+  <!-- PANEL -->
+  <div class="panel">
+    <div class="tab-bar">
+      <button class="spin-tab-btn" onclick="spinWheel()" title="Spin">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <div class="tab active" id="tabE" onclick="switchTab('E')">Entries <span class="tab-n" id="eBadge">0</span></div>
+      <div class="tab" id="tabR" onclick="switchTab('R')">Results <span class="tab-n" id="rBadge">0</span></div>
+    </div>
+
+    <div id="vE" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+      <div class="toolbar">
+        <button class="tb" onclick="shuffle()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" width="15" height="15"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>Shuffle
+        </button>
+        <button class="tb" onclick="sortEntries()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" width="15" height="15"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg>Sort
+        </button>
+        <button class="tb outline">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>Add image ▾
+        </button>
+        <label class="adv-lbl"><input type="checkbox"> Advanced</label>
       </div>
-      <div class="coin-right">
-        <div class="cr-section">
-          <div class="cr-title">Heads Color</div>
-          <div class="swatches-h" id="headSwatches"></div>
-        </div>
-        <div class="cr-section" style="border-top:1px solid rgba(255,255,255,.07)">
-          <div class="cr-title">Tails Color</div>
-          <div class="swatches-h" id="tailSwatches"></div>
-        </div>
-        <div class="cr-acc-header" onclick="toggleCrAcc('coinMusic')">
-          <div class="cr-acc-left">🎵 Win Music <span class="cr-pill" id="coinMusicPill">OFF</span></div>
-          <span id="coinMusicArrow" style="color:rgba(255,255,255,.4);font-size:.7rem">▼</span>
-        </div>
-        <div class="cr-acc-body" id="coinMusicBody">
-          <div class="music-tog-row"><span class="music-tog-label">Enable</span><button class="tog-dark" id="coinMusicTog" onclick="toggleMusicEnabled('coin')"></button></div>
-          <input class="music-inp-dark" id="coinYtUrl" placeholder="YouTube link…"/>
-          <div class="music-row-dark">
-            <input class="music-inp-sm" id="coinYtStart" type="number" min="0" value="0" placeholder="Start sec"/>
-            <input class="music-inp-sm" id="coinYtDur" type="number" min="1" value="10" placeholder="Duration"/>
-            <button class="music-save-dark" onclick="saveMusic('coin')">💾</button>
-          </div>
-          <div class="music-status-dark" id="coinMusicStatus"></div>
-        </div>
+      <div class="ta-wrap">
+        <textarea class="ta" id="ta" placeholder="Type or paste entries here, one per line…" oninput="onTA()"></textarea>
       </div>
     </div>
-  </div>
 
-  <!-- DICE TAB -->
-  <div class="tab-view" id="tv-dice">
-    <div class="dice-tab">
-      <div class="dice-stage">
-        <div class="dice-type-row" id="diceTypeRow"></div>
-        <div class="dice-count-row">
-          <button class="count-btn" onclick="changeDiceCount(-1)">−</button>
-          <span id="diceCountLabel" style="color:#fff">2 dice</span>
-          <button class="count-btn" onclick="changeDiceCount(1)">＋</button>
-        </div>
-        <div class="dice-area" id="diceArea"></div>
-        <div class="dice-result" id="diceResult">—</div>
-        <button class="dice-roll-btn" onclick="rollDice()">🎲 ROLL IT!</button>
-        <div class="dice-stats">
-          <span>Rolls: <b id="diceTotal">0</b></span>
-          <span>Sum: <b id="diceSum">—</b></span>
-          <button class="reset-btn" onclick="resetDice()">Reset</button>
-        </div>
-      </div>
-      <div class="dice-right">
-        <div class="cr-acc-header" onclick="toggleCrAcc('diceCheat')">
-          <div class="cr-acc-left">⚡ Cheat Mode <span class="cr-pill" id="diceCheatPill">OFF</span></div>
-          <span id="diceCheatArrow" style="color:rgba(255,255,255,.4);font-size:.7rem">▼</span>
-        </div>
-        <div class="cr-acc-body" id="diceCheatBody">
-          <div class="pct-row"><span class="pct-label">Force value</span><b class="pct-val" id="diceForceVal">Random</b></div>
-          <input type="range" min="0" max="20" value="0" id="diceForceSlider" oninput="updateDiceForce(this.value)"/>
-          <div class="shints"><span>Random</span><span>Max</span></div>
-        </div>
-        <div class="cr-acc-header" onclick="toggleCrAcc('diceMusic')">
-          <div class="cr-acc-left">🎵 Win Music <span class="cr-pill" id="diceMusicPill">OFF</span></div>
-          <span id="diceMusicArrow" style="color:rgba(255,255,255,.4);font-size:.7rem">▼</span>
-        </div>
-        <div class="cr-acc-body" id="diceMusicBody">
-          <div class="music-tog-row"><span class="music-tog-label">Enable</span><button class="tog-dark" id="diceMusicTog" onclick="toggleMusicEnabled('dice')"></button></div>
-          <input class="music-inp-dark" id="diceYtUrl" placeholder="YouTube link…"/>
-          <div class="music-row-dark">
-            <input class="music-inp-sm" id="diceYtStart" type="number" min="0" value="0" placeholder="Start sec"/>
-            <input class="music-inp-sm" id="diceYtDur" type="number" min="1" value="10" placeholder="Duration"/>
-            <button class="music-save-dark" onclick="saveMusic('dice')">💾</button>
-          </div>
-          <div class="music-status-dark" id="diceMusicStatus"></div>
-        </div>
+    <div id="vR" style="display:none;flex:1;overflow:hidden">
+      <div class="res-wrap" id="resList">
+        <div style="padding:16px;color:#9aa0a6;font-size:13px">No results yet.</div>
       </div>
     </div>
-  </div>
 
+    <div class="panel-foot">
+      <div class="add-grp">
+        <button class="add-main"><span class="beta">Beta</span> + Add wheel</button>
+        <button class="add-arr">▾</button>
+      </div>
+      <span class="ver">Version 405 &nbsp;<a href="#">Changelog</a></span>
+    </div>
+  </div>
 </div>
 
-<div id="yt-player"></div>
+<!-- WINNER MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="w-card">
+    <div class="w-rainbow"></div>
+    <div class="w-head"><span style="font-size:28px">🏆</span><span class="w-head-txt">We have a winner!</span></div>
+    <div class="w-body">
+      <div class="w-name" id="wName">—</div>
+      <div class="w-actions">
+        <button class="wbtn wbtn-x" onclick="closeModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Close</button>
+        <button class="wbtn wbtn-rm" onclick="removeWinner()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>Remove</button>
+        <button class="wbtn wbtn-rma" onclick="removeAll()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>Remove all</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
-// ─── HAMBURGER ───────────────────────────────────────────
-function toggleHamMenu(){document.getElementById('hamMenu').classList.toggle('open')}
-document.addEventListener('click',function(e){if(!document.getElementById('hamWrap').contains(e.target))document.getElementById('hamMenu').classList.remove('open')});
+'use strict';
 
-// ─── YOUTUBE ─────────────────────────────────────────────
-var ytPlayer=null,ytReady=false,ytPlayerReady=false,stopMusicTimer=null;
-window.onYouTubeIframeAPIReady=function(){ytReady=true;ytPlayer=new YT.Player('yt-player',{height:'1',width:'1',videoId:'',playerVars:{autoplay:0,controls:0,enablejsapi:1},events:{onReady:function(){ytPlayerReady=true;ytPlayer.setVolume(80)}}})};
-function loadYT(){if(document.getElementById('yt-api'))return;var s=document.createElement('script');s.id='yt-api';s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s)}
-function extractVid(url){var m=url.match(/(?:youtu\.be\/|v=|\/v\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);return m?m[1]:null}
-var musicSettings={wheel:{url:'',startSec:0,duration:10,enabled:false},coin:{url:'',startSec:0,duration:10,enabled:false},dice:{url:'',startSec:0,duration:10,enabled:false}};
-function toggleMusicEnabled(tab){var s=musicSettings[tab];s.enabled=!s.enabled;var togId=tab==='wheel'?'wmusicTog':tab+'MusicTog';var tog=document.getElementById(togId);if(tog)tog.classList.toggle('on',s.enabled);var pill=document.getElementById(tab+'MusicPill');if(pill){pill.textContent=s.enabled?'ON':'OFF';pill.className='cr-pill'+(s.enabled?' on':'')};if(s.enabled&&!ytReady)loadYT()}
-function saveMusic(tab){var url=document.getElementById(tab+'YtUrl').value.trim();var start=parseInt(document.getElementById(tab+'YtStart').value)||0;var dur=parseInt(document.getElementById(tab+'YtDur').value)||10;musicSettings[tab].url=url;musicSettings[tab].startSec=start;musicSettings[tab].duration=dur;var vid=extractVid(url);var el=document.getElementById(tab+'MusicStatus');if(!el)return;if(url&&!vid){el.style.color='#ff7070';el.textContent='⚠ Invalid URL'}else{el.style.color='#80d8a0';el.textContent=vid?'✓ Saved!':'✓ Cleared';if(vid&&!ytReady)loadYT()}setTimeout(function(){el.textContent=''},3000)}
-function playWinMusic(tab){var s=musicSettings[tab];if(!s.enabled||!s.url)return;var vid=extractVid(s.url);if(!vid)return;var dur=(s.duration||10)*1000,start=s.startSec||0;function doPlay(){try{if(stopMusicTimer)clearTimeout(stopMusicTimer);ytPlayer.mute();ytPlayer.loadVideoById({videoId:vid,startSeconds:start});ytPlayer.playVideo();setTimeout(function(){try{ytPlayer.unMute();ytPlayer.setVolume(80)}catch(e){}},800);stopMusicTimer=setTimeout(function(){try{ytPlayer.stopVideo()}catch(e){}},dur)}catch(e){}}if(ytPlayerReady){doPlay()}else{loadYT();var att=0;var ck=setInterval(function(){att++;if(ytPlayerReady){clearInterval(ck);doPlay()}if(att>40)clearInterval(ck)},200)}}
-
-// ─── APP TABS ─────────────────────────────────────────────
-function switchApp(name){['wheel','coin','dice'].forEach(function(t){document.getElementById('tv-'+t).classList.toggle('active',t===name)});if(name==='wheel'){sizeCanvas();drawWheel()}}
-
-// ─── ACCORDION ───────────────────────────────────────────
-var crOpen={};
-function toggleCrAcc(id){crOpen[id]=!crOpen[id];var open=crOpen[id];var body=document.getElementById(id+'Body');var arrow=document.getElementById(id+'Arrow');var pill=document.getElementById(id+'Pill');if(body)body.className='cr-acc-body'+(open?' open':'');if(arrow)arrow.textContent=open?'▲':'▼';if(pill){pill.textContent=open?'OPEN':'OFF';pill.className='cr-pill'+(open?' on':'')}}
-
-// ─── FLOATING PANELS ─────────────────────────────────────
-var panelOpen={cheat:false,wmusic:false};
-function togglePanel(id){panelOpen[id]=!panelOpen[id];document.getElementById(id+'Panel').classList.toggle('open',panelOpen[id]);document.getElementById(id==='cheat'?'cheatBtn':'wmusicBtn').classList.toggle('active-btn',panelOpen[id]);if(id==='cheat')updateForceGrid()}
-
-// ═══════════════════════════════════════════════════════════
-// WHEEL
-// ═══════════════════════════════════════════════════════════
-var entries=[];
-var WC=['#e53935','#1e88e5','#fb8c00','#43a047','#8e24aa','#00897b','#f4511e','#3949ab','#fdd835','#00acc1'];
-var wheelAngle=0, spinning=false, forcedIdx=-1, spinResults=[];
-var sz=500;
-
-/*
-  POINTER IS AT THE TOP (12 o'clock = -π/2 radians).
-  A segment "wins" when its midpoint angle lands at exactly -π/2
-  (pointing straight up), which is where the pointer tip is.
-
-  wheelAngle is the rotation of the whole wheel.
-  Segment i spans: [wheelAngle + i*arc, wheelAngle + (i+1)*arc]
-  Segment midpoint (in canvas coords): wheelAngle + i*arc + arc/2
-
-  For segment i to be under the top pointer, we need:
-    (wheelAngle + i*arc + arc/2) ≡ -π/2  (mod 2π)
-  i.e. the midpoint is at the 12 o'clock position.
-*/
-
-function sizeCanvas(){
-  var stage=document.getElementById('wheelStage');if(!stage)return;
-  var w=stage.clientWidth-80, h=stage.clientHeight-120; // extra top room for pointer
-  sz=Math.max(180,Math.min(w,h,580));
-  var c=document.getElementById('wheelCanvas');
-  c.width=sz;c.height=sz;
-
-  // Size the pointer relative to wheel
-  var ps=Math.max(22, sz*0.07);
-  var svg=document.getElementById('pointerSvg');
-  svg.style.width=ps+'px';
-  svg.style.height=(ps*1.3)+'px';
-
-  drawWheel();
+// ─── CRYPTO RNG ───────────────────────────────────────────────────────────────
+function cryptoRand() {
+  const buf = new Uint32Array(1);
+  crypto.getRandomValues(buf);
+  return buf[0] / (0xFFFFFFFF + 1);
 }
 
-function drawWheel(){
-  var c=document.getElementById('wheelCanvas');if(!c)return;
-  var ctx=c.getContext('2d'),cx=sz/2,cy=sz/2,r=sz/2-3,n=entries.length;
-  ctx.clearRect(0,0,sz,sz);
-  if(!n){
-    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
-    ctx.fillStyle='#e8e8e8';ctx.fill();
-    ctx.fillStyle='#aaa';ctx.font='bold 15px Roboto,sans-serif';
-    ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText('Add entries →',cx,cy);return;
-  }
-  var arc=2*Math.PI/n;
+// ─── COLOURS ─────────────────────────────────────────────────────────────────
+const COLORS = [
+  '#ea4335','#4285f4','#fbbc04','#34a853',
+  '#e91e63','#00bcd4','#ff5722','#3f51b5',
+  '#ff9800','#009688','#9c27b0','#607d8b',
+  '#f06292','#64b5f6','#aed581','#ffcc02'
+];
 
-  // Draw segments
-  for(var i=0;i<n;i++){
-    var s=wheelAngle+i*arc, e=s+arc;
-    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,s,e);ctx.closePath();
-    ctx.fillStyle=entries[i].color;ctx.fill();
-    ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=2;ctx.stroke();
-  }
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let entries  = [];
+let results  = [];
+let ang      = 0;
+let spinning = false;
+let sz       = 500;
+let winIdx   = -1;
+let winLabel = '';
 
-  // Draw labels radially
-  var hubR=sz*0.065;
-  for(var i=0;i<n;i++){
-    var mid=wheelAngle+i*arc+arc/2;
-    ctx.save();
-    ctx.translate(cx,cy);
-    ctx.rotate(mid);
-    var label=entries[i].label;
-    var midR=(hubR+r)/2;
-    var arcHeight=midR*arc;
-    var fsByHeight=Math.floor(arcHeight*0.68);
-    var radLen=r-hubR-14;
-    var fsByWidth=Math.floor(radLen/(label.length*0.6));
-    var fs=Math.max(10,Math.min(fsByHeight,fsByWidth,Math.floor(sz*0.115)));
-    ctx.font='bold '+fs+'px Roboto,sans-serif';
-    ctx.fillStyle='#fff';
-    ctx.textAlign='left';
-    ctx.textBaseline='middle';
-    ctx.shadowColor='rgba(0,0,0,.75)';ctx.shadowBlur=4;
-    ctx.shadowOffsetX=1;ctx.shadowOffsetY=1;
-    ctx.save();
-    ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,r-2,-arc/2,arc/2);ctx.closePath();ctx.clip();
-    ctx.fillText(label,hubR+6,0);
-    ctx.restore();ctx.restore();
-  }
-
-  // Outer ring
-  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
-  ctx.strokeStyle='rgba(0,0,0,.12)';ctx.lineWidth=5;ctx.stroke();
-
-  // Hub
-  ctx.beginPath();ctx.arc(cx,cy,hubR,0,Math.PI*2);
-  ctx.fillStyle='#fff';
-  ctx.shadowColor='rgba(0,0,0,.2)';ctx.shadowBlur=10;
-  ctx.fill();ctx.shadowBlur=0;
-  ctx.strokeStyle='rgba(0,0,0,.1)';ctx.lineWidth=2;ctx.stroke();
-  ctx.beginPath();ctx.arc(cx,cy,hubR*.35,0,Math.PI*2);
-  ctx.fillStyle='#ddd';ctx.fill();
+// ─── AUDIO ───────────────────────────────────────────────────────────────────
+let AudioCtx = null;
+function getAC() {
+  if (!AudioCtx) AudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return AudioCtx;
 }
 
-function spinWheel(){
-  if(spinning||!entries.length)return;
-  spinning=true;
-  document.getElementById('spinMain').textContent='';
-  document.getElementById('spinSub').textContent='';
+function playTick(speed) {
+  try {
+    const c = getAC(), t = c.currentTime;
+    const pitch = 0.5 + speed * 2.5;
+    const dur = 0.06;
+    const buf = c.createBuffer(1, Math.floor(c.sampleRate * dur), c.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = (Math.random()*2-1) * Math.pow(1-i/d.length, 4);
+    const src = c.createBufferSource(); src.buffer = buf; src.playbackRate.value = pitch;
+    const bp  = c.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 2200 * pitch; bp.Q.value = 1.4;
+    const g   = c.createGain(); g.gain.setValueAtTime(0.5, t); g.gain.exponentialRampToValueAtTime(0.001, t+dur);
+    src.connect(bp); bp.connect(g); g.connect(c.destination);
+    src.start(t); src.stop(t + dur + 0.01);
+  } catch(e) {}
+}
 
-  var n=entries.length;
-  var arc=2*Math.PI/n;
+function playFanfare() {
+  try {
+    const c = getAC(), t = c.currentTime;
+    [[523.25,0,.9],[659.25,.1,.85],[783.99,.2,.8],[1046.5,.3,1.0]].forEach(([f,dt,dur]) => {
+      const o = c.createOscillator(); o.type = 'triangle'; o.frequency.value = f;
+      const g = c.createGain();
+      g.gain.setValueAtTime(0, t+dt);
+      g.gain.linearRampToValueAtTime(0.15, t+dt+0.05);
+      g.gain.exponentialRampToValueAtTime(0.001, t+dt+dur);
+      o.connect(g); g.connect(c.destination); o.start(t+dt); o.stop(t+dt+dur+0.05);
+    });
+    const sw = c.createOscillator(); sw.type = 'sine';
+    sw.frequency.setValueAtTime(440,t+.32); sw.frequency.linearRampToValueAtTime(1100,t+.9);
+    const sg = c.createGain(); sg.gain.setValueAtTime(.08,t+.32); sg.gain.exponentialRampToValueAtTime(.001,t+1.1);
+    sw.connect(sg); sg.connect(c.destination); sw.start(t+.32); sw.stop(t+1.15);
+    const al = Math.floor(c.sampleRate*2.5), ab = c.createBuffer(2,al,c.sampleRate);
+    for (let ch=0; ch<2; ch++) { const dd=ab.getChannelData(ch); for(let i=0;i<al;i++){const e=Math.pow(Math.max(0,1-i/al),.4)*(0.5+0.5*Math.abs(Math.sin(i*.009+ch)));dd[i]=(Math.random()*2-1)*e*.28;} }
+    const ns = c.createBufferSource(); ns.buffer = ab;
+    const lp = c.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=5000;
+    const ng = c.createGain(); ng.gain.setValueAtTime(0,t+.4); ng.gain.linearRampToValueAtTime(.6,t+.75); ng.gain.exponentialRampToValueAtTime(.001,t+2.8);
+    ns.connect(lp); lp.connect(ng); ng.connect(c.destination); ns.start(t+.4); ns.stop(t+3.0);
+  } catch(e) {}
+}
 
-  // Determine the winning index
-  // No cheat: pure random (strictly uniform)
-  var winIdx = (forcedIdx>=0 && forcedIdx<n) ? forcedIdx : Math.floor(Math.random()*n);
+// ─── RESIZE ──────────────────────────────────────────────────────────────────
+function resize() {
+  const stage = document.getElementById('stage');
+  sz = Math.max(150, Math.min(stage.clientWidth - 80, stage.clientHeight - 40, 720));
+  const cv = document.getElementById('wheelCanvas');
+  cv.width = cv.height = sz;
 
-  /*
-    We need segment winIdx's midpoint to land at the TOP pointer (-π/2).
-    Segment winIdx midpoint in world coords = (wheelAngle_final + winIdx*arc + arc/2)
-    We want that ≡ -π/2 (mod 2π)
+  const pSize = Math.max(16, sz * 0.06);
+  const psvg = document.getElementById('ptrSvg');
+  psvg.style.width  = (pSize * 1.35) + 'px';
+  psvg.style.height = pSize + 'px';
+  const pout = document.getElementById('ptrOuter');
+  pout.style.right = (-pSize * 0.22) + 'px';
+  draw();
+}
 
-    So: wheelAngle_final = -π/2 - winIdx*arc - arc/2 + k*2π  for some integer k
-    We also want the wheel to spin several full rotations forward.
-  */
-  var targetAngle = -Math.PI/2 - winIdx*arc - arc/2;
+// ─── DRAW ─────────────────────────────────────────────────────────────────────
+function draw() {
+  const cv = document.getElementById('wheelCanvas'); if (!cv) return;
+  const ctx = cv.getContext('2d');
+  const cx = sz/2, cy = sz/2, R = sz/2 - 2, n = entries.length;
+  ctx.clearRect(0, 0, sz, sz);
 
-  // Normalize current wheelAngle to [0, 2π)
-  var current = ((wheelAngle % (Math.PI*2)) + Math.PI*2) % (Math.PI*2);
-
-  // How far we need to go from current to reach targetAngle (mod 2π)
-  var normTarget = ((targetAngle % (Math.PI*2)) + Math.PI*2) % (Math.PI*2);
-  var diff = normTarget - current;
-  if(diff<=0) diff += Math.PI*2; // always go forward
-
-  // Add 5–9 full rotations for drama
-  var extraSpins = (5 + Math.floor(Math.random()*5)) * Math.PI*2;
-  var totalRot = extraSpins + diff;
-
-  var t0=null, startAngle=wheelAngle, dur=3500+Math.random()*1000;
-  function ease(t){return 1-Math.pow(1-t,4)}
-  function frame(ts){
-    if(!t0)t0=ts;
-    var p=Math.min((ts-t0)/dur,1);
-    wheelAngle=startAngle+totalRot*ease(p);
-    drawWheel();
-    if(p<1){requestAnimationFrame(frame);return}
-    // Snap precisely
-    wheelAngle=startAngle+totalRot;
-    var winner=entries[winIdx];
-    document.getElementById('spinMain').textContent='🎉 '+winner.label;
-    document.getElementById('spinSub').textContent='Click to spin again';
-    spinResults.unshift(winner.label);
-    document.getElementById('rBadge').textContent=spinResults.length;
-    renderResults();updateForceGrid();confetti(55);playWinMusic('wheel');spinning=false;
+  if (!n) {
+    const grd = ctx.createRadialGradient(cx-R*.2, cy-R*.2, R*.04, cx, cy, R);
+    grd.addColorStop(0, '#eef0f1'); grd.addColorStop(.65, '#e0e2e5'); grd.addColorStop(1, '#cdd0d4');
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI*2);
+    ctx.fillStyle = grd; ctx.fill();
+    drawHub(ctx, cx, cy);
+    return;
   }
+
+  const arc = (Math.PI*2) / n;
+
+  for (let i = 0; i < n; i++) {
+    const a0 = ang + i*arc, a1 = a0 + arc;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,R,a0,a1); ctx.closePath();
+    ctx.fillStyle = entries[i].color; ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,.55)'; ctx.lineWidth = 1.8; ctx.stroke();
+  }
+
+  ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2);
+  ctx.strokeStyle = 'rgba(0,0,0,.09)'; ctx.lineWidth = 6; ctx.stroke();
+
+  const hubR = sz * 0.078;
+  for (let i = 0; i < n; i++) {
+    const mid = ang + i*arc + arc/2;
+    const lbl = entries[i].label;
+    ctx.save();
+    ctx.translate(cx, cy); ctx.rotate(mid);
+
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.arc(0,0,R-2,-arc/2,arc/2); ctx.closePath(); ctx.clip();
+
+    const textR  = (hubR + R) / 2;
+    const arcH   = textR * arc;
+    const radL   = R - hubR - 14;
+    const fsByH  = Math.floor(arcH * 0.68);
+    const fsByW  = Math.floor(radL / (Math.max(1, lbl.length) * 0.54));
+    const fs = Math.max(10, Math.min(fsByH, fsByW, Math.floor(sz * 0.135)));
+
+    ctx.font = `600 ${fs}px "Patrick Hand", cursive`;
+    ctx.fillStyle = '#fff';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.shadowColor = 'rgba(0,0,0,.7)'; ctx.shadowBlur = 3.5;
+    ctx.shadowOffsetX = 1; ctx.shadowOffsetY = 1;
+    ctx.fillText(lbl, hubR + 12, 0);
+    ctx.restore();
+  }
+
+  drawHub(ctx, cx, cy);
+}
+
+function drawHub(ctx, cx, cy) {
+  const hR = sz * 0.078;
+  ctx.beginPath(); ctx.arc(cx,cy,hR,0,Math.PI*2);
+  ctx.fillStyle = '#fff'; ctx.shadowColor = 'rgba(0,0,0,.26)'; ctx.shadowBlur = 18;
+  ctx.fill(); ctx.shadowBlur = 0;
+  ctx.strokeStyle = 'rgba(0,0,0,.07)'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx,cy,hR*.26,0,Math.PI*2);
+  ctx.fillStyle = '#ddd'; ctx.fill();
+}
+
+// ─── SPIN ─────────────────────────────────────────────────────────────────────
+function spinWheel() {
+  if (spinning || !entries.length) return;
+  spinning = true;
+  document.getElementById('spinOverlay').classList.add('hidden');
+  try { getAC().resume(); } catch(e) {}
+
+  const n   = entries.length;
+  const arc = (Math.PI * 2) / n;
+
+  // ── Match wheelofnames.com default: ~8–12 seconds total spin ──
+  // Their default spinTime is ~10s. Randomise slightly for natural variation.
+  const minDur = 8.0, maxDur = 12.0;
+  const targetDur = minDur + cryptoRand() * (maxDur - minDur);
+
+  // k ≈ 0.35–0.45: slow enough to look physical, fast enough to finish in ~10s
+  const k  = 0.35 + cryptoRand() * 0.10;
+  const STOP_SPEED = 0.3;  // raised from 0.015 — stops decisively, no slow crawl
+  const omega0 = STOP_SPEED * Math.exp(k * targetDur);
+
+  // Ensure minimum 8 full rotations
+  const totalRot = omega0 / k;
+  const minTurns = 8 * Math.PI * 2;
+  const finalOmega0 = totalRot < minTurns ? (minTurns * k) : omega0;
+
+  let   omega    = finalOmega0;
+  let   t0       = null;
+  let   lastSeg  = -1;
+  let   lastTs   = null;
+
+  function frame(ts) {
+    if (!t0) { t0 = ts; lastTs = ts; }
+
+    const dt = Math.min((ts - lastTs) / 1000, 0.05);
+    lastTs = ts;
+
+    omega *= Math.exp(-k * dt);
+    ang   += omega * dt;
+    draw();
+
+    const ptrAngle = (((-ang) % (Math.PI*2)) + Math.PI*2) % (Math.PI*2);
+    const seg = Math.floor(ptrAngle / arc) % n;
+    if (seg !== lastSeg) {
+      lastSeg = seg;
+      playTick(Math.min(omega / (finalOmega0 * 0.8), 1));
+    }
+
+    if (omega > STOP_SPEED) {
+      requestAnimationFrame(frame);
+      return;
+    }
+
+    const finalPtrAngle = (((-ang) % (Math.PI*2)) + Math.PI*2) % (Math.PI*2);
+    winIdx   = Math.floor(finalPtrAngle / arc) % n;
+    winLabel = entries[winIdx].label;
+    spinning = false;
+    document.getElementById('spinOverlay').classList.remove('hidden');
+
+    results.unshift(winLabel);
+    document.getElementById('rBadge').textContent = results.length;
+    playFanfare();
+    launchConfetti(100);
+    setTimeout(showWinner, 380);
+  }
+
   requestAnimationFrame(frame);
 }
 
-function addEntry(){var inp=document.getElementById('newEntry'),v=inp.value.trim();if(!v)return;entries.push({label:v,color:WC[entries.length%WC.length]});inp.value='';renderEntries();drawWheel();updateForceGrid()}
-function removeEntry(i){entries.splice(i,1);if(forcedIdx>=entries.length)forcedIdx=-1;renderEntries();drawWheel();updateForceGrid()}
-function shuffleEntries(){for(var i=entries.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=entries[i];entries[i]=entries[j];entries[j]=t}renderEntries();drawWheel()}
-function sortEntries(){entries.sort(function(a,b){return a.label.localeCompare(b.label)});renderEntries();drawWheel()}
-function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function renderEntries(){
-  var el=document.getElementById('entriesList');el.innerHTML='';
-  entries.forEach(function(e,i){
-    var r=document.createElement('div');r.className='erow';
-    r.innerHTML='<div class="edot" style="background:'+e.color+'"></div><span class="ename">'+escHtml(e.label)+'</span><button class="edel" onclick="removeEntry('+i+')">✕</button>';
-    el.appendChild(r);
-  });
-  document.getElementById('eBadge').textContent=entries.length;
+// ─── WINNER ───────────────────────────────────────────────────────────────────
+function showWinner() {
+  const e  = entries[winIdx];
+  const nm = document.getElementById('wName');
+  nm.textContent = e ? e.label : '?';
+  nm.style.color = e ? e.color : '#202124';
+  document.getElementById('modal').classList.add('open');
 }
-function renderResults(){
-  var el=document.getElementById('resultsList');
-  if(!spinResults.length){el.innerHTML='<div style="color:#bbb;font-size:13px">No results yet.</div>';return}
-  el.innerHTML=spinResults.map(function(r,i){return'<div class="ritem">'+(i+1)+'. '+escHtml(r)+'</div>'}).join('');
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+function removeWinner() {
+  if (winIdx >= 0 && winIdx < entries.length) entries.splice(winIdx, 1);
+  sync(); draw(); winIdx = -1; closeModal();
 }
-function updateForceGrid(){
-  var g=document.getElementById('forceGrid');if(!g)return;g.innerHTML='';
-  entries.forEach(function(e,i){
-    var b=document.createElement('button');
-    b.className='force-btn'+(i===forcedIdx?' on':'');
-    b.textContent=e.label;
-    b.onclick=(function(idx){return function(){forcedIdx=(forcedIdx===idx)?-1:idx;updateForceGrid()}})(i);
-    g.appendChild(b);
-  });
-}
-function switchPTab(t){
-  ['entries','results'].forEach(function(x){
-    document.getElementById('ptab-'+x).classList.toggle('active',x===t);
-    document.getElementById('pv-'+x).style.display=x===t?(x==='entries'?'flex':'block'):'none';
-  });
+function removeAll() {
+  if (winLabel) entries = entries.filter(e => e.label !== winLabel);
+  sync(); draw(); winIdx = -1; closeModal();
 }
 
-// ─── COIN ─────────────────────────────────────────────────
-// Strict 50/50 — Math.random() is unbiased, exactly 0.5 threshold
-var coinStats={h:0,t:0}, coinFlipping=false;
-var COLORS=[
-  {bg:'radial-gradient(circle at 38% 32%,#dcdcdc,#a0a0a0)',text:'#111'},
-  {bg:'radial-gradient(circle at 38% 32%,#ffd700,#b8860b)',text:'#2a2000'},
-  {bg:'radial-gradient(circle at 38% 32%,#d48550,#8a4510)',text:'#fff'},
-  {bg:'radial-gradient(circle at 38% 32%,#e05050,#901818)',text:'#fff'},
-  {bg:'radial-gradient(circle at 38% 32%,#5090e0,#1840a0)',text:'#fff'},
-  {bg:'radial-gradient(circle at 38% 32%,#9060e8,#5020a0)',text:'#fff'},
-  {bg:'radial-gradient(circle at 38% 32%,#30c880,#0a6040)',text:'#fff'},
-  {bg:'radial-gradient(circle at 38% 32%,#50c8e8,#0870a0)',text:'#fff'},
-  {bg:'radial-gradient(circle at 38% 32%,#555,#111)',text:'#eee'},
-];
-var hColor=4,tColor=0;
-function buildSwatches(){
-  ['headSwatches','tailSwatches'].forEach(function(id,side){
-    var el=document.getElementById(id);el.innerHTML='';
-    COLORS.forEach(function(c,i){
-      var sel=(side===0&&i===hColor)||(side===1&&i===tColor);
-      var d=document.createElement('div');d.className='swatch'+(sel?' active':'');
-      d.style.background=c.bg;d.style.borderColor=sel?'#fff':'transparent';
-      d.onclick=(function(s,idx){return function(){if(s===0)hColor=idx;else tColor=idx;applyColors();buildSwatches()}})(side,i);
-      el.appendChild(d);
-    });
+// ─── ENTRIES ─────────────────────────────────────────────────────────────────
+function onTA() {
+  const lines = document.getElementById('ta').value.split('\n');
+  const ne = [];
+  lines.forEach(l => {
+    const t = l.trim(); if (!t) return;
+    const ex = entries.find(e => e.label === t);
+    ne.push({ label: t, color: ex ? ex.color : COLORS[ne.length % COLORS.length] });
   });
+  entries = ne;
+  document.getElementById('eBadge').textContent = entries.length;
+  draw();
 }
-function applyColors(){
-  var hf=document.getElementById('headsface'),tf=document.getElementById('tailsface');
-  hf.style.background=COLORS[hColor].bg;hf.style.color=COLORS[hColor].text;
-  tf.style.background=COLORS[tColor].bg;tf.style.color=COLORS[tColor].text;
-}
-function doFlip(){
-  if(coinFlipping)return;coinFlipping=true;
-  var coin=document.getElementById('coin');coin.className='coin';void coin.offsetWidth;
-  // Strict 50/50: heads if random < 0.5, tails otherwise
-  var result=Math.random()<0.5?'heads':'tails';
-  coin.classList.add(result==='heads'?'anim-h':'anim-t');
-  document.getElementById('coinResult').textContent='...';
-  setTimeout(function(){
-    coin.className='coin'+(result==='tails'?' tails':'');
-    document.getElementById('coinResult').textContent=result==='heads'?'HEADS!':'TAILS!';
-    if(result==='heads')coinStats.h++;else coinStats.t++;
-    document.getElementById('hCount').textContent=coinStats.h;
-    document.getElementById('tCount').textContent=coinStats.t;
-    document.getElementById('coinTotal').textContent=coinStats.h+coinStats.t;
-    confetti(30);playWinMusic('coin');coinFlipping=false;
-  },760);
-}
-function resetCoin(){coinStats={h:0,t:0};['hCount','tCount','coinTotal'].forEach(function(id){document.getElementById(id).textContent=0});document.getElementById('coinResult').textContent='—';document.getElementById('coin').className='coin'}
 
-// ─── DICE ─────────────────────────────────────────────────
-var diceFaces=[4,6,8,10,12,20],diceTypeSides=6,diceCount=2,diceRolling=false,diceRollTotal=0,diceForcedValue=0;
-function diceEmoji(v){return v>=1&&v<=6&&diceTypeSides===6?['⚀','⚁','⚂','⚃','⚄','⚅'][v-1]:v}
-function buildDiceUI(){
-  var area=document.getElementById('diceArea');area.innerHTML='';
-  for(var i=0;i<diceCount;i++){var die=document.createElement('div');die.className='die';die.id='die-'+i;die.style.fontSize=diceTypeSides===6?'2.4rem':'1.7rem';die.textContent=diceTypeSides===6?'⚄':'?';die.onclick=rollDice;area.appendChild(die)}
-  document.getElementById('diceCountLabel').textContent=diceCount+' '+(diceCount===1?'die':'dice');
-  var sl=document.getElementById('diceForceSlider');sl.max=diceTypeSides;if(+sl.value>diceTypeSides)sl.value=0;updateDiceForce(sl.value);
+function sync() {
+  document.getElementById('ta').value = entries.map(e => e.label).join('\n');
+  document.getElementById('eBadge').textContent = entries.length;
 }
-function buildDiceTypes(){
-  var row=document.getElementById('diceTypeRow');row.innerHTML='';
-  diceFaces.forEach(function(s){var b=document.createElement('button');b.className='dtype-btn'+(s===diceTypeSides?' active':'');b.textContent='d'+s;b.onclick=(function(sides){return function(){diceTypeSides=sides;buildDiceTypes();buildDiceUI()}})(s);row.appendChild(b)});
-}
-function changeDiceCount(d){diceCount=Math.max(1,Math.min(6,diceCount+d));buildDiceUI()}
-function updateDiceForce(v){diceForcedValue=parseInt(v)||0;document.getElementById('diceForceVal').textContent=diceForcedValue===0?'Random':diceForcedValue}
-function rollDice(){
-  if(diceRolling)return;diceRolling=true;
-  var results=[];
-  for(var i=0;i<diceCount;i++)results.push(diceForcedValue>0&&diceForcedValue<=diceTypeSides?diceForcedValue:Math.floor(Math.random()*diceTypeSides)+1);
-  var anim=setInterval(function(){for(var i=0;i<diceCount;i++){var d=document.getElementById('die-'+i);if(d)d.textContent=diceEmoji(Math.floor(Math.random()*diceTypeSides)+1)}},60);
-  for(var i=0;i<diceCount;i++){var d=document.getElementById('die-'+i);if(d)d.classList.add('rolling')}
-  setTimeout(function(){
-    clearInterval(anim);var sum=0;
-    results.forEach(function(v,i){var d=document.getElementById('die-'+i);if(d){d.textContent=diceEmoji(v);d.classList.remove('rolling')}sum+=v});
-    var rs=results.length===1?results[0]+'!':results.join(' + ')+' = '+sum;
-    document.getElementById('diceResult').textContent=rs;
-    document.getElementById('diceTotal').textContent=++diceRollTotal;
-    document.getElementById('diceSum').textContent=sum;
-    confetti(25);playWinMusic('dice');diceRolling=false;
-  },500);
-}
-function resetDice(){diceRollTotal=0;document.getElementById('diceTotal').textContent=0;document.getElementById('diceSum').textContent='—';document.getElementById('diceResult').textContent='—';for(var i=0;i<diceCount;i++){var d=document.getElementById('die-'+i);if(d)d.textContent=diceTypeSides===6?'⚄':'?'}}
 
-// ─── CONFETTI ─────────────────────────────────────────────
-var cc=['#e53935','#ffd600','#1e88e5','#43a047','#8e24aa','#fb8c00','#fff','#ff80ab','#00e5ff'];
-function confetti(n){for(var i=0;i<n;i++){var el=document.createElement('div');el.className='cp';el.style.left=Math.random()*100+'vw';el.style.background=cc[Math.floor(Math.random()*cc.length)];el.style.width=(6+Math.random()*9)+'px';el.style.height=(6+Math.random()*9)+'px';el.style.animationDuration=(1.1+Math.random()*2)+'s';el.style.animationDelay=(Math.random()*.5)+'s';el.style.borderRadius=Math.random()>.5?'50%':'2px';document.body.appendChild(el);setTimeout(function(){el.remove()},3600)}}
+function shuffle() {
+  for (let i = entries.length-1; i > 0; i--) {
+    const j = Math.floor(cryptoRand() * (i+1));
+    [entries[i], entries[j]] = [entries[j], entries[i]];
+  }
+  sync(); draw();
+}
 
-// ─── INIT ────────────────────────────────────────────────
-buildSwatches();applyColors();
-buildDiceTypes();buildDiceUI();
-renderEntries();renderResults();
-window.addEventListener('load',sizeCanvas);
-window.addEventListener('resize',sizeCanvas);
-setTimeout(sizeCanvas,60);
-document.addEventListener('keydown',function(e){if(e.ctrlKey&&e.key==='Enter')spinWheel()});
-loadYT();
+function sortEntries() {
+  entries.sort((a,b) => a.label.localeCompare(b.label));
+  sync(); draw();
+}
+
+function renderResults() {
+  const el = document.getElementById('resList');
+  if (!results.length) { el.innerHTML = '<div style="padding:16px;color:#9aa0a6;font-size:13px">No results yet.</div>'; return; }
+  el.innerHTML = results.map((r,i) => {
+    const c = entries.find(e => e.label===r);
+    const col = c ? c.color : COLORS[i % COLORS.length];
+    return `<div class="r-row"><span class="r-num">${i+1}</span><div class="r-dot" style="background:${col}"></div><span>${esc(r)}</span></div>`;
+  }).join('');
+}
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ─── TABS ─────────────────────────────────────────────────────────────────────
+function switchTab(t) {
+  document.getElementById('tabE').classList.toggle('active', t==='E');
+  document.getElementById('tabR').classList.toggle('active', t==='R');
+  document.getElementById('vE').style.display = t==='E' ? 'flex' : 'none';
+  document.getElementById('vR').style.display = t==='R' ? 'block' : 'none';
+  if (t==='R') renderResults();
+}
+
+// ─── CONFETTI ─────────────────────────────────────────────────────────────────
+const CC = ['#ea4335','#ffd600','#4285f4','#34a853','#9c27b0','#fb8c00','#fff','#ff80ab','#00e5ff','#ff6d00'];
+function launchConfetti(n) {
+  for (let i=0; i<n; i++) {
+    const el = document.createElement('div');
+    el.className = 'cp';
+    const w = 4 + cryptoRand()*10;
+    el.style.cssText = `left:${cryptoRand()*100}vw;background:${CC[Math.floor(cryptoRand()*CC.length)]};width:${w}px;height:${w}px;animation-duration:${1.1+cryptoRand()*2.2}s;animation-delay:${cryptoRand()*.55}s;border-radius:${cryptoRand()>.5?'50%':'2px'}`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4200);
+  }
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+window.addEventListener('load', resize);
+window.addEventListener('resize', resize);
+setTimeout(resize, 40);
+document.addEventListener('keydown', e => { if (e.ctrlKey && e.key==='Enter') spinWheel(); });
 </script>
 </body>
 </html>
